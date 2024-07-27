@@ -1,0 +1,22 @@
+[
+    {
+    "_id": { "$oid": "64b28b5c3f8b9e6fdbc7feca" },
+    "pelicula_id": { "$oid": "64b28b5c3f8b9e6fdbc7febe" },
+    "cine_id": { "$oid": "64b28b5c3f8b9e6fdbc7febd" },
+    "fecha_hora": { "$date": "2024-08-01T18:00:00Z" },
+    "sala": "Sala 1",
+    "asientos_disponibles": 50,
+    "asientos_totales": 150,
+    "precio": 12.50
+    },
+    {
+    "_id": { "$oid": "64b28b5c3f8b9e6fdbc7fecb" },
+    "pelicula_id": { "$oid": "64b28b5c3f8b9e6fdbc7febf" },
+    "cine_id": { "$oid": "64b28b5c3f8b9e6fdbc7febd" },
+    "fecha_hora": { "$date": "2024-08-02T20:00:00Z" },
+    "sala": "Sala 2",
+    "asientos_disponibles": 80,
+    "asientos_totales": 200,
+    "precio": 15.00
+    }
+]

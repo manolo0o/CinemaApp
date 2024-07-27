@@ -1,0 +1,44 @@
+[
+    {
+    "_id": { "$oid": "64b28b5c3f8b9e6fdbc7febd" },
+    "nombre": "CineCampus Central",
+    "direccion": "Avenida Siempre Viva 742",
+    "ciudad": "Springfield",
+    "estado": "Illinois",
+    "pais": "USA",
+    "telefono": "+123456789",
+    "salas": [
+        {
+        "sala_id": { "$oid": "64b28b5c3f8b9e6fdbc7fec0" },
+        "nombre": "Sala 1",
+        "capacidad": 150
+        },
+        {
+        "sala_id": { "$oid": "64b28b5c3f8b9e6fdbc7fec1" },
+        "nombre": "Sala 2",
+        "capacidad": 200
+        }
+    ]
+    },
+    {
+    "_id": { "$oid": "64b28b5c3f8b9e6fdbc7fecd" },
+    "nombre": "CineCampus Norte",
+    "direccion": "Calle Principal 123",
+    "ciudad": "Metropolis",
+    "estado": "NY",
+    "pais": "USA",
+    "telefono": "+987654321",
+    "salas": [
+        {
+        "sala_id": { "$oid": "64b28b5c3f8b9e6fdbc7fec2" },
+        "nombre": "Sala 1",
+        "capacidad": 120
+        },
+        {
+        "sala_id": { "$oid": "64b28b5c3f8b9e6fdbc7fec3" },
+        "nombre": "Sala 2",
+    "capacidad": 180
+        }
+    ]
+    }
+]

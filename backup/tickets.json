@@ -1,0 +1,22 @@
+[
+    {
+        "_id": { "$oid": "64b28b5c3f8b9e6fdbc7feca" },
+        "funcion_id": { "$oid": "64b28b5c3f8b9e6fdbc7feca" },
+        "cliente_id": { "$oid": "64b28b5c3f8b9e6fdbc7febd" },
+        "asiento": "F12",
+        "precio": 12.50,
+        "fecha_compra": { "$date": "2024-07-26T15:30:00Z" },
+        "descuento_aplicado": 0,
+        "método_pago": "tarjeta de crédito"
+    },
+    {
+        "_id": { "$oid": "64b28b5c3f8b9e6fdbc7fecb" },
+        "funcion_id": { "$oid": "64b28b5c3f8b9e6fdbc7fecb" },
+        "cliente_id": { "$oid": "64b28b5c3f8b9e6fdbc7fec9" },
+        "asiento": "G10",
+        "precio": 15.00,
+        "fecha_compra": { "$date": "2024-07-26T16:30:00Z" },
+        "descuento_aplicado": 15,
+        "método_pago": "PayPal"
+    }
+]
