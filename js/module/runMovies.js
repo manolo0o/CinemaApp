@@ -11,7 +11,7 @@ export const getAllmovies =  async () => {
         console.log("Movies:", movie);
         return movie;
     } catch (error){
-        console.error("Error obtaining all players", error);
+        console.error("Error obtaining all movies...", error);
         throw error;;
     } finally {
         await moviesInstance.close();
@@ -28,12 +28,31 @@ export const getMoviesByID =  async (idMovies) => {
         console.log("Movies:", movie);
         return movie;
     } catch (error){
-        console.error("Error obtaining all players", error);
+        console.error("Error obtaining the movies by id...", error);
         throw error;;
     } finally {
         await moviesInstance.close();
     }
 };
+
+//____________________ FUNCTIONS BY MOVIEID ____________________________
+
+export const getMovieFunctionsByID =  async (idMovies) => {
+    let moviesInstance = new movies();
+    await moviesInstance.initialize();
+    try{
+        const movie = await moviesInstance.getMovieFunctionsByID(idMovies);
+        console.log("Movies:", JSON.stringify(movie, null, 2));
+        return movie;
+    } catch (error){
+        console.error("Error obtaining the functions by movie ID...", error);
+        throw error;;
+    } finally {
+        await moviesInstance.close();
+    }
+};
+
+
 
 (async() => {
 //____________________ ALL MOVIES ____________________________
@@ -43,7 +62,12 @@ export const getMoviesByID =  async (idMovies) => {
 //____________________ MOVIES BY ID ____________________________
 
 // Parameter to find the movie
-    let idMovies = "64b28b5c3f8b9e6fdbc7febe"; // insert the id you wanna find
-    await getMoviesByID(idMovies); // call the method
+//    let idMovies = "64b28b5c3f8b9e6fdbc7febe"; // insert the id you wanna find
+//    await getMoviesByID(idMovies); // call the method
+
+//____________________ FUNCTIONS BY MOVIEID ____________________________
+
+let idMovies = "64b28b5c3f8b9e6fdbc7febe";
+await getMovieFunctionsByID(idMovies);
 
 })();
