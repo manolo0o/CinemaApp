@@ -96,5 +96,50 @@ class movies extends connect {
         ).toArray();
         return res;
     }
+//____________________ FUNCTIONS BY MOVIEID ____________________________
+    
+    /**
+     * @typedef {Object} movies
+     * @property {string} idMovies - Movie id.
+     * @property {string} titulo - movie title.
+     * @property {string} descripcion - description of the movie.
+     * @property {string} director - Movie director.
+     * @property {string} actores - Actor from the movie.
+     * @property {string} genero - Film gender.
+     * @property {string} duracion - Film duration.
+     * @property {string} fecha_estreno - Dremiere date.
+     * @property {string} calificacion - criticism.
+     * @property {string} idioma - lenguage of the movie.
+     * @property {string} subtitulos - Available captions.
+     * @property {string} formato - movie format (2D,3D,IMAX...ETC).
+     */
+
+    /**
+     * Obtiene todos los resultados de la colección.
+     * @returns {Promise<Array<Equipo>>} - Array con todos los resultados de los Noticias.
+     */
+    async getMovieFunctionsByID(idMovies){
+        let res = await this.collection.aggregate([
+                { $match: {_id: new ObjectId(idMovies) } },
+                {
+                    $lookup: {
+                        from: "funciones",
+                        localField: "_id",
+                        foreignField: "pelicula_id",
+                        as: "funciones"
+                }
+                },
+                {
+                    $project:{
+                        '_id':0,
+                        'titulo':1,
+                        'funciones.asientos_disponibles':1,
+                        'funciones.asientos_totales':1,
+                        'funciones.fecha_hora':1
+                    }
+                }
+            ]).toArray();
+            return res;
+        }
 }
 export default movies;
