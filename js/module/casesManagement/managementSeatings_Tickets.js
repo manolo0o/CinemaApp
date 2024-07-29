@@ -41,7 +41,53 @@ class tickets extends connect{
         return res;
     } 
 
-//____________________ OCCUPIED SEATS ____________________________
+//____________________ AVAILABLE SEATS ____________________________
+    
+    /**
+     * @typedef {Object} tickets
+     * @property {string} idTickets - tickets id.
+     * @property {string} funcion_id - function id .
+     * @property {string} cliente_id - client id.
+     * @property {string}  asiento - asigned seat.
+     * @property {string}  precio - ticket price.
+     * @property {string}  fecha_compra - date of purchase.
+     * @property {string}  descuento_aplicado - applied discount.
+     * @property {string}  método_pago - payment method.
+     */
+    /**
+     * get the result of the collection.
+     * @returns {Promise<Array<tickets>>} - Array with the result of tickets.
+     */
+
+async getAvailableSeatsByFunctionID(funcion_id){
+    let res = await this.collection.aggregate([
+        { $match: { _id: new ObjectId(funcion_id ) } },
+        {
+            $lookup: {
+                from: "funciones",
+                localField: "funcion_id",
+                foreignField: "_id",
+                as: "asientos disponibles y totales",
+                    pipeline: [
+                        {
+                    $project: {
+                        '_id': 0,
+                        'asientos_disponibles': 1,
+                        'asientos_totales':1
+                        }
+                    }
+                    ]
+                }
+            },
+            {
+                $project: {
+                    '_id': 0,
+                    'asientos disponibles y totales': 1
+                }
+                }
+            ]).toArray();
+            return res;
+        }
 
 }
 export default tickets;
