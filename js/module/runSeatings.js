@@ -34,6 +34,22 @@ export const getAvailableSeatsByFunctionID =  async (funcion_id) => {
         await ticketsInstance.close();
     }
 };
+//____________________ OCCUPIED SEATS BY FUNCTIONID____________________________
+
+    export const getOccupiedSeatsByFunctionID =  async (funcion_id) => {
+        let ticketsInstance = new tickets();
+        await ticketsInstance.initialize();
+        try{
+            const ticket = await ticketsInstance.getOccupiedSeatsByFunctionID(funcion_id);
+            console.log("Tickets:", JSON.stringify(ticket, null, 2));
+            return ticket;
+        } catch (error){
+            console.error("Error obtaining occupied seats...", error);
+            throw error;;
+        } finally {
+            await ticketsInstance.close();
+        }
+    };
 
 (async() => {
 //____________________ ALL BUYED TICKETS ____________________________
@@ -42,7 +58,12 @@ export const getAvailableSeatsByFunctionID =  async (funcion_id) => {
 
 //____________________ AVAILABLE SEATS ____________________________
 
-    let funcion_id = "64b28b5c3f8b9e6fdbc7feca";
-    await getAvailableSeatsByFunctionID(funcion_id);
+//    let funcion_id = "64b28b5c3f8b9e6fdbc7feca";
+//    await getAvailableSeatsByFunctionID(funcion_id);
 
-    })();
+//____________________ OCCUPIED SEATS BY FUNCTIONID____________________________
+
+    let funcion_id = "64b28b5c3f8b9e6fdbc7feca";
+    await getOccupiedSeatsByFunctionID(funcion_id);
+
+})();

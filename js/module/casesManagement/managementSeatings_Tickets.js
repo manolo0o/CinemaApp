@@ -89,5 +89,36 @@ async getAvailableSeatsByFunctionID(funcion_id){
             return res;
         }
 
+//____________________ OCCUPIED SEATS BY FUNCTIONID____________________________
+
+    /**
+     * @typedef {Object} tickets
+     * @property {string} idTickets - tickets id.
+     * @property {string} funcion_id - function id .
+     * @property {string} cliente_id - client id.
+     * @property {string}  asiento - asigned seat.
+     * @property {string}  precio - ticket price.
+     * @property {string}  fecha_compra - date of purchase.
+     * @property {string}  descuento_aplicado - applied discount.
+     * @property {string}  método_pago - payment method.
+     */
+    /**
+     * get the result of the collection.
+     * @returns {Promise<Array<tickets>>} - Array with the result of tickets.
+     */
+    async getOccupiedSeatsByFunctionID(funcion_id){
+        let res = await this.collection.find(
+            {"_id": new ObjectId(funcion_id)},
+            {
+                projection:{
+                    "_id":0,
+                    "asiento":1,
+                    "cliente_id":1
+                }
+            }
+        ).toArray();
+        return res;
+    }
+
 }
 export default tickets;

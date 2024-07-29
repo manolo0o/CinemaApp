@@ -42,8 +42,6 @@ class functions extends connect {
         ).toArray();
         return res;
     }
-//____________________ GET AVAILABLE SEATS ____________________________
-
 
 }
 export default functions;
