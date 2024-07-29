@@ -8,9 +8,9 @@
     "dev": "node --watch --env-file=.env main.js",
     "discount": "node --watch --env-file=.env js/module/runDiscount.js",
     "movies": "node --watch --env-file=.env js/module/runMovies.js",
-    "online": "node --watch --env-file=.env js/module/runOnlinetickets.js",
+    "functions": "node --watch --env-file=.env js/module/runFunctions.js",
     "seatings": "node --watch --env-file=.env js/module/runSeatings.js"
-  
+    
   },
   "keywords": [],
   "author": "",
