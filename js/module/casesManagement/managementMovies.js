@@ -36,8 +36,8 @@ class movies extends connect {
      */
 
     /**
-     * Obtiene todos los resultados de la colección.
-     * @returns {Promise<Array<Equipo>>} - Array con todos los resultados de los Noticias.
+     * get the result of the collection.
+     * @returns {Promise<Array<movies>>} - Array with the result of movies collection.
      */
 
     async getAllmovies(){ // method to find movies, and project its title,id,gender and duration.
@@ -141,5 +141,6 @@ class movies extends connect {
             ]).toArray();
             return res;
         }
+        
 }
 export default movies;
