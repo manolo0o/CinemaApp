@@ -67,7 +67,7 @@ export const getMovieFunctionsByID =  async (idMovies) => {
 
 //____________________ FUNCTIONS BY MOVIEID ____________________________
 
-let idMovies = "64b28b5c3f8b9e6fdbc7febe";
-await getMovieFunctionsByID(idMovies);
+ let idMovies = "64b28b5c3f8b9e6fdbc7febe";
+ await getMovieFunctionsByID(idMovies);
 
 })();

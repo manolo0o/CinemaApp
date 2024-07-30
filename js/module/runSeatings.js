@@ -61,7 +61,8 @@ export const addTicket = async(
     precio,
     fecha_compra,
     descuento_aplicado,
-    método_pago
+    método_pago,
+    hora_funcion
     ) => {
     let ticketsInstance = new tickets();
     await ticketsInstance.initialize();
@@ -74,7 +75,8 @@ export const addTicket = async(
             precio,
             fecha_compra,
             descuento_aplicado,
-            método_pago
+            método_pago,
+            hora_funcion
         );
         console.log("Resultado de Agregar Ticket:", resultadoAgregar);
         return resultadoAgregar;
@@ -108,12 +110,12 @@ export const addTicket = async(
 
     let funcion_id = new ObjectId('64b28b5c3f8b9e6fdbc7feca') ;
     let cliente_id = new ObjectId('64b28b5c3f8b9e6fdbc7febd') ;
-    let asiento = 'F12' ;
+    let asiento = 'F11' ;
     let precio = 12.5 ;
     let fecha_compra = new Date('2024-07-26T15:30:00.000Z"') ;
     let descuento_aplicado = 0 ;
     let método_pago = 'tarjeta de crédito' ;
-    
+    let hora_funcion = '8:30'
     
     try{ 
         await addTicket(
@@ -123,7 +125,8 @@ export const addTicket = async(
             precio,
             fecha_compra,
             descuento_aplicado,
-            método_pago
+            método_pago,
+            hora_funcion
         );
     }catch (error) {
         console.log("Error al agregar ticket:", error);

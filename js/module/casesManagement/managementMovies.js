@@ -135,7 +135,7 @@ class movies extends connect {
                         'titulo':1,
                         'funciones.asientos_disponibles':1,
                         'funciones.asientos_totales':1,
-                        'funciones.fecha_hora':1
+                        'funciones.horas':1
                     }
                 }
             ]).toArray();

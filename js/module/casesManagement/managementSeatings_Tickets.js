@@ -143,7 +143,8 @@ async getAvailableSeatsByFunctionID(funcion_id){
         precio,
         fecha_compra,
         descuento_aplicado,
-        método_pago){
+        método_pago,
+        hora_funcion){
         console.log("Adding Ticket",{
             funcion_id,
             cliente_id,
@@ -151,17 +152,18 @@ async getAvailableSeatsByFunctionID(funcion_id){
             precio,
             fecha_compra,
             descuento_aplicado,
-            método_pago});
+            método_pago,
+            hora_funcion});
         try{
 
             const asientoExistente = await this.collection.findOne({
-                funcion_id: ObjectId(funcion_id),
+                funcion_id: new ObjectId(funcion_id),
                 asiento: asiento
             });
             if (asientoExistente) {
                 throw new Error('El asiento ya esta ocupado.');
             }
-
+            
             const resultado = await this.collection.insertOne({
             funcion_id: new ObjectId(funcion_id),
             cliente_id: new ObjectId(cliente_id),
@@ -169,7 +171,8 @@ async getAvailableSeatsByFunctionID(funcion_id){
             precio: precio,
             fecha_compra: new Date(fecha_compra),
             descuento_aplicado: descuento_aplicado,
-            método_pago: método_pago
+            método_pago: método_pago,
+            hora_funcion: hora_funcion
             });
             console.log("Resultado:", resultado);
             return resultado;
