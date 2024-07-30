@@ -119,6 +119,65 @@ async getAvailableSeatsByFunctionID(funcion_id){
         ).toArray();
         return res;
     }
+//____________________ ADD TICKET ____________________________
+    /**
+     * @typedef {Object} tickets
+     * @property {string} idTickets - tickets id.
+     * @property {string} funcion_id - function id .
+     * @property {string} cliente_id - client id.
+     * @property {string}  asiento - asigned seat.
+     * @property {string}  precio - ticket price.
+     * @property {string}  fecha_compra - date of purchase.
+     * @property {string}  descuento_aplicado - applied discount.
+     * @property {string}  método_pago - payment method.
+     */
+    /**
+     * get the result of the collection.
+     * @returns {Promise<Array<tickets>>} - Array with the result of tickets.
+     */
+    
+    async addTicket(
+        funcion_id,
+        cliente_id,
+        asiento,
+        precio,
+        fecha_compra,
+        descuento_aplicado,
+        método_pago){
+        console.log("Adding Ticket",{
+            funcion_id,
+            cliente_id,
+            asiento,
+            precio,
+            fecha_compra,
+            descuento_aplicado,
+            método_pago});
+        try{
+
+            const asientoExistente = await this.collection.findOne({
+                funcion_id: ObjectId(funcion_id),
+                asiento: asiento
+            });
+            if (asientoExistente) {
+                throw new Error('El asiento ya esta ocupado.');
+            }
+
+            const resultado = await this.collection.insertOne({
+            funcion_id: new ObjectId(funcion_id),
+            cliente_id: new ObjectId(cliente_id),
+            asiento: asiento,
+            precio: precio,
+            fecha_compra: new Date(fecha_compra),
+            descuento_aplicado: descuento_aplicado,
+            método_pago: método_pago
+            });
+            console.log("Resultado:", resultado);
+            return resultado;
+        } catch(error){
+            console.error("Error al comprar Ticket", error);
+            throw error;
+        }
+    }
 
 }
 export default tickets;
