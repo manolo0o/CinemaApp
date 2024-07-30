@@ -18,7 +18,7 @@ class tickets extends connect{
     }
 //____________________ ALL BUYED TICKETS ____________________________
 
-        /**
+    /**
      * @typedef {Object} tickets
      * @property {string} idTickets - tickets id.
      * @property {string} funcion_id - function id .
