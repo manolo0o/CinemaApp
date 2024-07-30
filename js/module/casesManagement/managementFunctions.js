@@ -49,7 +49,7 @@ class functions extends connect {
      * @property {string} functionsID - Movie id.
      * @property {string} pelicula_id - movie title.
      * @property {string} cine_id - cinema id.
-     * @property {string} fecha_hora - date_hour.
+     * @property {string} horas - hour.
      * @property {string} sala - cinema hall.
      * @property {string} asientos_disponibles - available seats.
      * @property {string} asientos_totales _ total seats.
@@ -68,7 +68,7 @@ class functions extends connect {
                     "_id":0,
                     "sala":1,
                     "precio":1,
-                    "fecha_hora":1
+                    "horas":1
                 }
             }
         ).toArray();
