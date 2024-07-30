@@ -43,5 +43,37 @@ class functions extends connect {
         return res;
     }
 
+//____________________ FUNCTION HOUR BY MOVIEID ____________________________
+    /**
+     * @typedef {Object} functions
+     * @property {string} functionsID - Movie id.
+     * @property {string} pelicula_id - movie title.
+     * @property {string} cine_id - cinema id.
+     * @property {string} fecha_hora - date_hour.
+     * @property {string} sala - cinema hall.
+     * @property {string} asientos_disponibles - available seats.
+     * @property {string} asientos_totales _ total seats.
+     * @property {string} precio - price.
+     */
+
+    /**
+     * get the result of the collection.
+     * @returns {Promise<Array<functions>>} - Array with the result of functions collection.
+     */
+    async getFunctionsBy___MovieID(pelicula_id){
+        let res = await this.collection.find(
+            {"pelicula_id": new ObjectId(pelicula_id)},
+            {
+                projection:{
+                    "_id":0,
+                    "sala":1,
+                    "precio":1,
+                    "fecha_hora":1
+                }
+            }
+        ).toArray();
+        return res;
+    }
+
 }
 export default functions;
