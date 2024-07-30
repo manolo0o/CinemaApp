@@ -86,7 +86,8 @@ export const addTicket = async(
     } finally{
         await ticketsInstance.close();
     }
-}
+};
+
 
 //___________________________________________________________________
 
@@ -110,9 +111,9 @@ export const addTicket = async(
 
     let funcion_id = new ObjectId('64b28b5c3f8b9e6fdbc7feca') ;
     let cliente_id = new ObjectId('64b28b5c3f8b9e6fdbc7febd') ;
-    let asiento = 'F11' ;
+    let asiento = 'F20' ;
     let precio = 12.5 ;
-    let fecha_compra = new Date('2024-07-26T15:30:00.000Z"') ;
+    let fecha_compra = new Date('2024-07-26"') ;
     let descuento_aplicado = 0 ;
     let método_pago = 'tarjeta de crédito' ;
     let hora_funcion = '8:30'

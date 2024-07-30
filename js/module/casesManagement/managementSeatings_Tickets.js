@@ -163,6 +163,22 @@ async getAvailableSeatsByFunctionID(funcion_id){
             if (asientoExistente) {
                 throw new Error('El asiento ya esta ocupado.');
             }
+            // Verificar si hay asientos disponibles en la colección funciones
+            const funcionesCollection = this.db.collection('funciones');
+            const funcion = await funcionesCollection.findOne({
+            _id: new ObjectId(funcion_id),
+            asientos_disponibles: { $gt: 0 }
+            });
+
+            if (!funcion) {
+            throw new Error('No hay asientos disponibles.');
+            }
+
+            // Actualizar el número de asientos disponibles
+            await funcionesCollection.updateOne(
+            { _id: new ObjectId(funcion_id) },
+            { $inc: { asientos_disponibles: -1 } }
+            );
             
             const resultado = await this.collection.insertOne({
             funcion_id: new ObjectId(funcion_id),
