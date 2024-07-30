@@ -41,5 +41,23 @@ class clients extends connect{
         return res;
     } 
 
+// ______________________ BOOKINGS ________________________
+
+/**
+     * @typedef {Object} clients
+     * @property {string} idClient - clients id.
+     * @property {string} name - client name .
+     * @property {string} email - client email.
+     * @property {string} telefono - client telephone .
+     * @property {string} direccion - client adress.
+     * @property {string} tipo_cliente_id - client type ID.
+     * @property {string}  reservas - client bookings.
+     */
+    /**
+     * get the result of the collection.
+     * @returns {Promise<Array<clients>>} - Array with the result of clients.
+     */
+    
+
 }
 export default clients;
