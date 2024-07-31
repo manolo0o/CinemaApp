@@ -1,60 +1,88 @@
 import { ObjectId } from "mongodb";
 import functions from "./casesManagement/managementFunctions.js";
 
-//____________________ GETALL FUNCTIONS ____________________________
+//____________________ GET ALL FUNCTIONS ____________________________
 
-
-export const getAllFunctions =  async () => {
+/**
+ * Función para obtener todas las funciones.
+ * Crea una instancia de la clase `functions`, la inicializa y llama al método `getAllFunctions`.
+ * @returns {Promise<Array>} - Array con todas las funciones.
+ * @throws {Error} - Lanza un error si ocurre un problema al obtener las funciones.
+ */
+export const getAllFunctions = async () => {
     let functionInstance = new functions();
     await functionInstance.initialize();
-    try{
+    try {
         const Function = await functionInstance.getAllFunctions();
         console.log("functions:", Function);
         return Function;
-    } catch (error){
+    } catch (error) {
         console.error("Error obtaining all functions...", error);
-        throw error;;
+        throw error;
     } finally {
         await functionInstance.close();
-    };
+    }
 };
 
-//____________________ FUNCTION HOUR BY MOVIEID ____________________________
+//____________________ FUNCTION HOURS BY MOVIE ID ____________________________
 
-export const getFunctionsBy___MovieID =  async (pelicula_id) => {
+/**
+ * Función para obtener funciones por ID de la película.
+ * Crea una instancia de la clase `functions`, la inicializa y llama al método `getFunctionsByMovieID`.
+ * @param {string} pelicula_id - ID de la película.
+ * @returns {Promise<Array>} - Array con las funciones correspondientes a la película.
+ * @throws {Error} - Lanza un error si ocurre un problema al obtener las funciones específicas de la película.
+ */
+export const getFunctionsByMovieID = async (pelicula_id) => {
     let functionInstance = new functions();
     await functionInstance.initialize();
-    try{
-        const Function = await functionInstance.getFunctionsBy___MovieID(pelicula_id);
-        console.log("Movie functions:",  JSON.stringify(Function, null, 2));
+    try {
+        const Function = await functionInstance.getFunctionsByMovieID(pelicula_id);
+        console.log("Movie functions:", JSON.stringify(Function, null, 2));
         return Function;
-    } catch (error){
+    } catch (error) {
         console.error("Error obtaining specific movie function...", error);
-        throw error;;
+        throw error;
     } finally {
         await functionInstance.close();
-    };
+    }
 };
 
 //____________________ ADD BOOKINGS BY FUNCTION ID ____________________________
 
-export const addBookingsByFunctionID =  async (functionsID, newReservation) => {
+/**
+ * Función para añadir una nueva reserva a una función por su ID.
+ * Crea una instancia de la clase `functions`, la inicializa y llama al método `addBookingsByFunctionID`.
+ * @param {ObjectId} functionsID - ID de la función.
+ * @param {Reservation} newReservation - La nueva reserva a añadir.
+ * @returns {Promise<Object>} - Documento de la función actualizado.
+ * @throws {Error} - Lanza un error si ocurre un problema al añadir la reserva.
+ */
+export const addBookingsByFunctionID = async (functionsID, newReservation) => {
     let functionInstance = new functions();
     await functionInstance.initialize();
-    try{
+    try {
         const Function = await functionInstance.addBookingsByFunctionID(functionsID, newReservation);
-        console.log("Movie functions:",  JSON.stringify(Function, null, 2));
+        console.log("Updated function:", JSON.stringify(Function, null, 2));
         return Function;
-    } catch (error){
+    } catch (error) {
         console.error("Error adding booking by function id...", error);
-        throw error;;
+        throw error;
     } finally {
         await functionInstance.close();
-    };
+    }
 };
 
 //____________________ DELETE BOOKING BY FUNCTION ID ____________________________
 
+/**
+ * Función para eliminar una reserva de una función por su ID.
+ * Crea una instancia de la clase `functions`, la inicializa y llama al método `removeBookingByFunctionID`.
+ * @param {ObjectId} functionsID - ID de la función.
+ * @param {Reservation} reservationToRemove - La reserva a eliminar.
+ * @returns {Promise<Object>} - Documento de la función actualizado.
+ * @throws {Error} - Lanza un error si ocurre un problema al eliminar la reserva.
+ */
 export const removeBookingByFunctionID = async (functionsID, reservationToRemove) => {
     let functionInstance = new functions();
     await functionInstance.initialize();
@@ -71,36 +99,37 @@ export const removeBookingByFunctionID = async (functionsID, reservationToRemove
 };
 
 //_________________________________________________________________________________
-(async() => {
-//____________________ GETALL FUNCTIONS ____________________________
 
-//    await getAllFunctions();
+(async () => {
+    //____________________ GET ALL FUNCTIONS ____________________________
 
-//____________________ FUNCTION HOUR BY MOVIEID ____________________________
-    
-//    let pelicula_id = "64b28b5c3f8b9e6fdbc7febe" ;
-//    await getFunctionsBy___MovieID(pelicula_id);
+    // await getAllFunctions();
 
-//____________________ ADD BOOKINGS BY FUNCTION ID ____________________________
+    //____________________ FUNCTION HOURS BY MOVIE ID ____________________________
 
-//     let funcion_id = new ObjectId('66a9c051bf1f3519f6394c29');
-//     let cliente_id = new ObjectId('64b28b5c3f8b9e6fdbc7febd');
-//     let asiento = 'F20';
+    // let pelicula_id = "64b28b5c3f8b9e6fdbc7febe";
+    // await getFunctionsByMovieID(pelicula_id);
 
-//     let newReservation = {
-//         asiento: asiento,
-//         cliente_id: cliente_id
-//     };
+    //____________________ ADD BOOKINGS BY FUNCTION ID ____________________________
 
-//     try {
-//         await addBookingsByFunctionID(funcion_id, newReservation);
-//     } catch (error) {
-//         console.log("Error al agregar reserva:", error);
-// }
+    // let funcion_id = new ObjectId('66a9c051bf1f3519f6394c29');
+    // let cliente_id = new ObjectId('64b28b5c3f8b9e6fdbc7febd');
+    // let asiento = 'F20';
 
-//____________________ DELETE BOOKING BY FUNCTION ID ____________________________
+    // let newReservation = {
+    //     asiento: asiento,
+    //     cliente_id: cliente_id
+    // };
 
-let funcion_id = new ObjectId('66a9c051bf1f3519f6394c29');
+    // try {
+    //     await addBookingsByFunctionID(funcion_id, newReservation);
+    // } catch (error) {
+    //     console.log("Error adding reservation:", error);
+    // }
+
+    //____________________ DELETE BOOKING BY FUNCTION ID ____________________________
+
+    let funcion_id = new ObjectId('66a9c051bf1f3519f6394c29');
     let cliente_id = new ObjectId('64b28b5c3f8b9e6fdbc7febd');
     let asiento = 'F20';
     
@@ -112,7 +141,6 @@ let funcion_id = new ObjectId('66a9c051bf1f3519f6394c29');
     try {
         await removeBookingByFunctionID(funcion_id, reservationToRemove);
     } catch (error) {
-        console.log("Error al eliminar reserva:", error);
+        console.log("Error removing reservation:", error);
     }
-
 })();
