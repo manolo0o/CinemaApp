@@ -41,7 +41,7 @@ class clients extends connect{
         return res;
     } 
 
-// ______________________ BOOKINGS ________________________
+// ______________________ CLIENT SATATUS BY ID ________________________
 
 /**
      * @typedef {Object} clients
@@ -57,7 +57,35 @@ class clients extends connect{
      * get the result of the collection.
      * @returns {Promise<Array<clients>>} - Array with the result of clients.
      */
-    
+    async vipClients (tipo_cliente_id){
+        let res = await this.collection.aggregate([
+            { $match: { tipo_cliente_id: new ObjectId(tipo_cliente_id) } },
+                {
+                $lookup: {
+                    from: "tipoCliente",
+                    localField: "tipo_cliente_id",
+                    foreignField: "_id",
+                    as: "tipoClienteInfo",
+                        pipeline:[
+                        {
+                        $project:{
+                            _id:0,
+                            nombre: 1,
+                            descuento: 1
+                        }
+                        }
+                    ]
+                }
+                },
+                {
+                $project: {
+                    _id:0,
+                    tipo_cliente_id:0
+                }
+                }
+        ]).toArray();
+        return res;
+    }
 
 }
 export default clients;
