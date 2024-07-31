@@ -123,5 +123,52 @@ class functions extends connect {
         }
     }
 
+//____________________ DELETE BOOKING BY FUNCTION ID ____________________________
+    /**
+     * Remove a booking from a function by its ID and reservation details.
+     * @param {ObjectId} functionsID - Function ID.
+     * @param {Reservation} reservationToRemove - The reservation to remove.
+     * @returns {Promise<Object>} - Updated function document.
+     * @throws {Error} - Throws an error if the reservation is not found.
+     */
+    async removeBookingByFunctionID(functionsID, reservationToRemove) {
+    const functionDoc = await this.collection.findOne({ "_id": new ObjectId(functionsID) });
+
+    if (!functionDoc) {
+        throw new Error('Function not found');
+    }
+
+    if (!Array.isArray(functionDoc.reservas)) {
+        throw new Error('Reservations not found in the function');
+    }
+
+    const reservationIndex = functionDoc.reservas.findIndex(reserva => 
+        reserva.asiento === reservationToRemove.asiento && 
+        reserva.cliente_id.equals(reservationToRemove.cliente_id)
+    );
+
+    if (reservationIndex === -1) {
+        throw new Error('Reservation not found');
+    }
+
+    functionDoc.reservas.splice(reservationIndex, 1);
+
+    const result = await this.collection.updateOne(
+        { "_id": new ObjectId(functionsID) },
+        {
+            $set: {
+                reservas: functionDoc.reservas,
+                asientos_disponibles: functionDoc.asientos_disponibles + 1
+            }
+        }
+    );
+
+    if (result.matchedCount > 0) {
+        return await this.collection.findOne({ "_id": new ObjectId(functionsID) });
+    } else {
+        throw new Error('Failed to update the function');
+    }
+}
+
 }
 export default functions;

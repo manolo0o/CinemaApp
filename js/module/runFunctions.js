@@ -53,6 +53,23 @@ export const addBookingsByFunctionID =  async (functionsID, newReservation) => {
     };
 };
 
+//____________________ DELETE BOOKING BY FUNCTION ID ____________________________
+
+export const removeBookingByFunctionID = async (functionsID, reservationToRemove) => {
+    let functionInstance = new functions();
+    await functionInstance.initialize();
+    try {
+        const updatedFunction = await functionInstance.removeBookingByFunctionID(functionsID, reservationToRemove);
+        console.log("Updated function:", JSON.stringify(updatedFunction, null, 2));
+        return updatedFunction;
+    } catch (error) {
+        console.error("Error removing booking by function ID...", error);
+        throw error;
+    } finally {
+        await functionInstance.close();
+    }
+};
+
 //_________________________________________________________________________________
 (async() => {
 //____________________ GETALL FUNCTIONS ____________________________
@@ -66,19 +83,36 @@ export const addBookingsByFunctionID =  async (functionsID, newReservation) => {
 
 //____________________ ADD BOOKINGS BY FUNCTION ID ____________________________
 
-    let funcion_id = new ObjectId('66a9c051bf1f3519f6394c29');
+//     let funcion_id = new ObjectId('66a9c051bf1f3519f6394c29');
+//     let cliente_id = new ObjectId('64b28b5c3f8b9e6fdbc7febd');
+//     let asiento = 'F20';
+
+//     let newReservation = {
+//         asiento: asiento,
+//         cliente_id: cliente_id
+//     };
+
+//     try {
+//         await addBookingsByFunctionID(funcion_id, newReservation);
+//     } catch (error) {
+//         console.log("Error al agregar reserva:", error);
+// }
+
+//____________________ DELETE BOOKING BY FUNCTION ID ____________________________
+
+let funcion_id = new ObjectId('66a9c051bf1f3519f6394c29');
     let cliente_id = new ObjectId('64b28b5c3f8b9e6fdbc7febd');
     let asiento = 'F20';
-
-    let newReservation = {
+    
+    let reservationToRemove = {
         asiento: asiento,
         cliente_id: cliente_id
     };
 
     try {
-        await addBookingsByFunctionID(funcion_id, newReservation);
+        await removeBookingByFunctionID(funcion_id, reservationToRemove);
     } catch (error) {
-        console.log("Error al agregar reserva:", error);
-}
+        console.log("Error al eliminar reserva:", error);
+    }
 
 })();
