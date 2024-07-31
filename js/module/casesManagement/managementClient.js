@@ -80,7 +80,8 @@ class clients extends connect{
                 {
                 $project: {
                     _id:0,
-                    tipo_cliente_id:0
+                    tipo_cliente_id:0,
+                    reservas:0
                 }
                 }
         ]).toArray();
@@ -89,3 +90,21 @@ class clients extends connect{
 
 }
 export default clients;
+
+
+// "salas": [
+//     {
+//       "sala_id": {
+//         "$oid": "64b28b5c3f8b9e6fdbc7fec0"
+//       },
+//       "nombre": "Sala 1",
+//       "capacidad": 150
+//     },
+//     {
+//       "sala_id": {
+//         "$oid": "64b28b5c3f8b9e6fdbc7fec1"
+//       },
+//       "nombre": "Sala 2",
+//       "capacidad": 200
+//     }
+//   ]

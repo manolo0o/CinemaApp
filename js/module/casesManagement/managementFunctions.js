@@ -74,6 +74,54 @@ class functions extends connect {
         ).toArray();
         return res;
     }
+//____________________ ADD BOOKINGS BY FUNCTION ID ____________________________
+    /**
+     * @typedef {Object} Reservation
+     * @property {string} asiento - Seat number.
+     * @property {ObjectId} cliente_id - Client ID.
+     */
+
+    /**
+     * Add a new booking to a function by its ID.
+     * @param {ObjectId} functionsID - Function ID.
+     * @param {Reservation} newReservation - The new reservation to add.
+     * @returns {Promise<Object>} - Updated function document.
+     * @throws {Error} - Throws an error if there are no available seats.
+     */
+    async addBookingsByFunctionID(functionsID, newReservation) {
+        // Fetch the function by its ID
+        const functionDoc = await this.collection.findOne({ "_id": new ObjectId(functionsID) });
+
+        if (!functionDoc) {
+            throw new Error('Function not found');
+        }
+
+        // Check if there are available seats
+        if (functionDoc.asientos_disponibles <= 0) {
+            throw new Error('No available seats');
+        }
+
+        // Add the new reservation to the reservations array
+        const updatedReservations = [...functionDoc.reservas, newReservation];
+
+        // Update the function document with the new reservation and decrement available seats
+        const result = await this.collection.updateOne(
+            { "_id": new ObjectId(functionsID) },
+            {
+                $set: {
+                    reservas: updatedReservations,
+                    asientos_disponibles: functionDoc.asientos_disponibles - 1
+                }
+            }
+        );
+
+        // Return the updated function document
+        if (result.matchedCount > 0) {
+            return await this.collection.findOne({ "_id": new ObjectId(functionsID) });
+        } else {
+            throw new Error('Failed to update the function');
+        }
+    }
 
 }
 export default functions;
