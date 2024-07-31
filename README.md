@@ -1,110 +1,333 @@
-📕 **Título: CineCampus**
+**CONEXION A MONGODB**
 
-------
+Este módulo proporciona una clase para gestionar la conexión a una base de datos MongoDB utilizando las credenciales almacenadas en un archivo .env. La clase implementa el patrón de diseño Singleton para asegurar que solo haya una instancia de conexión a la base de datos en la aplicación.
 
-**Tiempo de ejecución**: 4 Dias
 
-**Nivel de dificultad:** ★★★★☆
+**INSTALACION**
 
-### **Problematica**
+Asegúrate de tener las siguientes dependencias en tu proyecto:
 
-CineCampus es una empresa de entretenimiento que se especializa en ofrecer una experiencia de cine completa y personalizada. La empresa desea desarrollar una aplicación web que permita a los usuarios seleccionar películas, comprar boletos y asignar asientos de manera eficiente y cómoda. La aplicación también ofrecerá opciones de descuento para usuarios con tarjeta VIP y permitirá realizar compras en línea.
+```javascript
+npm install mongodb dotenv
+```
 
-### **Objetivo**
+**ARCHIVO .env**
 
-Desarrollar una serie de APIs para la aplicación web de CineCampus utilizando MongoDB como base de datos. Las APIs deberán gestionar la selección de películas, la compra de boletos, la asignación de asientos, y la implementación de descuentos para tarjetas VIP, con soporte para diferentes roles de usuario.
+Crea un archivo .env en la raíz de tu proyecto con las siguientes variables:
 
-### **Requisitos Funcionales**
+```javascript
+MONGO_USER=tu_usuario
+MONGO_PORT=27017
+MONGO_PWD=tu_contraseña
+MONGO_HOST=mongodb://
+MONGO_CLUSTER=tu_cluster
+MONGO_DB=tu_base_de_datos
+```
 
-1. Selección de Películas:
-   - **API para Listar Películas:** Permitir la consulta de todas las películas disponibles en el catálogo, con detalles como título, género, duración y horarios de proyección.
-   - **API para Obtener Detalles de Película:** Permitir la consulta de información detallada sobre una película específica, incluyendo sinopsis.
-2. Compra de Boletos:
-   - **API para Comprar Boletos:** Permitir la compra de boletos para una película específica, incluyendo la selección de la fecha y la hora de la proyección. xxx
-   - **API para Verificar Disponibilidad de Asientos:** Permitir la consulta de la disponibilidad de asientos en una sala para una proyección específica.
-3. Asignación de Asientos:
-   - **API para Reservar Asientos:** Permitir la selección y reserva de asientos para una proyección específica.
-   - **API para Cancelar Reserva de Asientos:** Permitir la cancelación de una reserva de asiento ya realizada.
-4. Descuentos y Tarjetas VIP:
-   - **API para Aplicar Descuentos:** Permitir la aplicación de descuentos en la compra de boletos para usuarios con tarjeta VIP. xxx
-   - **API para Verificar Tarjeta VIP:** Permitir la verificación de la validez de una tarjeta VIP durante el proceso de compra.
-5. Roles Definidos:**Administrador:** Tiene permisos completos para gestionar el sistema, incluyendo la venta de boletos en el lugar físico. Los administradores no están involucrados en las compras en línea realizadas por los usuarios.**Usuario Estándar:** Puede comprar boletos en línea sin la intervención del administrador.**Usuario VIP:** Puede comprar boletos en línea con descuentos aplicables para titulares de tarjetas VIP.**API para Crear Usuario:** Permitir la creación de nuevos usuarios en el sistema, asignando roles y privilegios específicos (usuario estándar, usuario VIP o administrador).**API para Obtener Detalles de Usuario:** Permitir la consulta de información detallada sobre un usuario, incluyendo su rol y estado de tarjeta VIP.**API para Actualizar Rol de Usuario:** Permitir la actualización del rol de un usuario (por ejemplo, cambiar de usuario estándar a VIP, o viceversa).**API para Listar Usuarios:** Permitir la consulta de todos los usuarios del sistema, con la posibilidad de filtrar por rol (VIP, estándar o administrador).
-6. Compras en Línea: xxxx
-   - **API para Procesar Pagos:** Permitir el procesamiento de pagos en línea para la compra de boletos.
-   - **API para Confirmación de Compra:** Enviar confirmación de la compra y los detalles del boleto al usuario.
+**CLASE CONNECT**
 
-### **Requisitos Técnicos**
+Importación:
 
-- **Base de Datos:** Utilizar MongoDB para el almacenamiento de datos relacionados con películas, boletos, asientos, usuarios y roles.
-- **Autenticación:** Implementar autenticación segura para el acceso a las APIs, utilizando roles de usuario para determinar los permisos y accesos (por ejemplo, usuarios VIP y usuarios estándar).
-- **Autorización de Roles:** Asegurar que las APIs y las operaciones disponibles estén adecuadamente restringidas según el rol del usuario (por ejemplo, aplicar descuentos solo a usuarios VIP).
-- **Documentación:** Proveer una documentación clara y completa para cada API, describiendo los endpoints, parámetros, y respuestas esperadas.
-- **Recursos**
-  - ![](https://i.ibb.co/SRdNPRr/draw-SQL-image-export-2024-07-25.png)
+```javascript
+import { MongoClient } from "mongodb";
+import dotenv from "dotenv";
+```
 
-### **Rúbrica Evaluativa**
+**DESCRIPCION**
 
-Los puntos a evaluar serán los siguientes:
+La clase connect maneja la conexión a MongoDB. Utiliza variables de entorno para configurar la conexión y proporciona métodos para abrir y cerrar la conexión a la base de datos.
 
-### 1. Selección de Películas (20%)
+Propiedades:
 
-- **0 puntos:** No se implementa la funcionalidad para listar películas ni obtener detalles de una película.
-- **25 puntos:** La funcionalidad para listar películas o obtener detalles de una película está parcialmente implementada, con errores significativos o faltante de características importantes.
-- **50 puntos:** La funcionalidad para listar películas y obtener detalles de una película está implementada pero presenta errores menores o no proporciona todos los datos requeridos.
-- **75 puntos:** La funcionalidad para listar películas y obtener detalles de una película está mayormente correcta, pero con pequeños problemas de usabilidad o eficiencia.
-- **100 puntos:** La funcionalidad para listar películas y obtener detalles de una película está completamente implementada, es eficiente, y proporciona toda la información requerida de manera clara.
+```javascript
+user; // Nombre de usuario para la conexión.
+port; // Puerto en el que se encuentra el servidor MongoDB.
+#pass; //  Contraseña para la conexión (privada).
+#host; //Host de la base de datos (privado).
+#cluster; //Cluster de MongoDB (privado).
+#dbName; //Nombre de la base de datos (privado).
+static instance; //Instancia Singleton de la clase.
+conexion; //Instancia de MongoClient.
+db; //Instancia de la base de datos.
+```
 
-### 2. Compra de Boletos (20%)
 
-- **0 puntos:** No se implementa la funcionalidad para comprar boletos ni verificar la disponibilidad de asientos.
-- **25 puntos:** La funcionalidad para comprar boletos o verificar la disponibilidad de asientos está parcialmente implementada, con errores significativos o faltante de características importantes.
-- **50 puntos:** La funcionalidad para comprar boletos y verificar la disponibilidad de asientos está implementada pero presenta errores menores o no maneja todos los casos posibles.
-- **75 puntos:** La funcionalidad para comprar boletos y verificar la disponibilidad de asientos está mayormente correcta, pero con pequeños problemas de usabilidad o eficiencia.
-- **100 puntos:** La funcionalidad para comprar boletos y verificar la disponibilidad de asientos está completamente implementada, es eficiente, y maneja todos los casos posibles de manera clara.
+**METODOS**
 
-### 3. Asignación de Asientos (20%)
+```javascript
+constructor() 
+//Crea una instancia de la clase si no existe una ya. Inicializa las propiedades con valores de las variables de entorno.
 
-- **0 puntos:** No se implementa la funcionalidad para reservar ni cancelar reservas de asientos.
-- **25 puntos:** La funcionalidad para reservar o cancelar reservas de asientos está parcialmente implementada, con errores significativos o faltante de características importantes.
-- **50 puntos:** La funcionalidad para reservar y cancelar reservas de asientos está implementada pero presenta errores menores o no maneja todos los casos posibles.
-- **75 puntos:** La funcionalidad para reservar y cancelar reservas de asientos está mayormente correcta, pero con pequeños problemas de usabilidad o eficiencia.
-- **100 puntos:** La funcionalidad para reservar y cancelar reservas de asientos está completamente implementada, es eficiente, y maneja todos los casos posibles de manera clara.
+set setPass(pass) {
+    this.#pass = pass;
+} // Configura la contraseña para la conexión.
 
-### 4. Descuentos y Tarjetas VIP (10%)
+set setHost(host) {
+    this.#host = host;
+} // Configura el host de la base de datos.
 
-- **0 puntos:** No se implementa la funcionalidad para aplicar descuentos ni verificar la validez de tarjetas VIP.
-- **25 puntos:** La funcionalidad para aplicar descuentos o verificar la validez de tarjetas VIP está parcialmente implementada, con errores significativos o faltante de características importantes.
-- **50 puntos:** La funcionalidad para aplicar descuentos y verificar la validez de tarjetas VIP está implementada pero presenta errores menores o no maneja todos los casos posibles.
-- **75 puntos:** La funcionalidad para aplicar descuentos y verificar la validez de tarjetas VIP está mayormente correcta, pero con pequeños problemas de usabilidad o eficiencia.
-- **100 puntos:** La funcionalidad para aplicar descuentos y verificar la validez de tarjetas VIP está completamente implementada, es eficiente, y maneja todos los casos posibles de manera clara.
+set setCluster(cluster) {
+    this.#cluster = cluster;
+} // Configura el cluster de MongoDB.
 
-### 5. Gestión de Usuarios y Roles (10%)
+set setDbName(dbName) {
+    this.#dbName = dbName;
+} // Configura el nombre de la base de datos.
 
-- **0 puntos:** No se implementa la funcionalidad para gestionar usuarios ni roles.
-- **25 puntos:** La funcionalidad para gestionar usuarios o roles está parcialmente implementada, con errores significativos o faltante de características importantes.
-- **50 puntos:** La funcionalidad para gestionar usuarios y roles está implementada pero presenta errores menores o no maneja todos los casos posibles.
-- **75 puntos:** La funcionalidad para gestionar usuarios y roles está mayormente correcta, pero con pequeños problemas de usabilidad o eficiencia.
-- **100 puntos:** La funcionalidad para gestionar usuarios y roles está completamente implementada, es eficiente, y maneja todos los casos posibles de manera clara.
+get getPass() {
+    return this.#pass;
+} // Obtiene la contraseña de la conexión.
 
-### 6. Compras en Línea (10%)
+get getHost() {
+    return this.#host;
+} // Obtiene el host de la base de datos.
 
-- **0 puntos:** No se implementa la funcionalidad para procesar pagos ni enviar confirmaciones de compra.
-- **25 puntos:** La funcionalidad para procesar pagos o enviar confirmaciones de compra está parcialmente implementada, con errores significativos o faltante de características importantes.
-- **50 puntos:** La funcionalidad para procesar pagos y enviar confirmaciones de compra está implementada pero presenta errores menores o no maneja todos los casos posibles.
-- **75 puntos:** La funcionalidad para procesar pagos y enviar confirmaciones de compra está mayormente correcta, pero con pequeños problemas de usabilidad o eficiencia.
-- **100 puntos:** La funcionalidad para procesar pagos y enviar confirmaciones de compra está completamente implementada, es eficiente, y maneja todos los casos posibles de manera clara.
+get getCluster() {
+    return this.#cluster;
+} // Obtiene el cluster de MongoDB.
 
-### 7. Documentación y Entregables (10%)
+get getDbName() {
+    return this.#dbName;
+} // Obtiene el nombre de la base de datos. 
 
-- **0 puntos:** No se entrega la documentación requerida ni el código fuente en el repositorio de GitHub.
-- **25 puntos:** La documentación o el código fuente están incompletos o presentan errores significativos.
-- **50 puntos:** La documentación y el código fuente están mayormente completos, pero con algunos errores menores o faltantes.
-- **75 puntos:** La documentación y el código fuente están correctos, con pequeños problemas de claridad o detalles menores faltantes.
-- **100 puntos:** La documentación y el código fuente están completos, claros y bien organizados, proporcionando toda la información necesaria de manera eficiente.
+async open() 
+// Conecta a MongoDB utilizando las credenciales y parámetros configurados. Imprime la URI de conexión y un mensaje de conexión exitosa en la consola.
 
-### GitHub y Entrega de Proyecto
+async close() 
+// Cierra la conexión a MongoDB e imprime un mensaje de desconexión exitosa en la consola.
+```
 
-- 🚨 **Cancelación o Anulación del Proyecto** : No se entregó ningún repositorio, su visualización está oculta (o no compartida con el Trainer) o hubo adulteración después de la fecha y hora establecida para su entrega, ***Evidencia de clonación o conocido como `fork` de algún repositorio, distribución y/o copia de dicho trabajo por cualquier medio de comunicación (verbal, digital, entre otras), se asumirá como cancelación del proyecto de manera definitiva.*** 🚨
-- **25 puntos**: Se creó el repositorio, pero en su rama principal no se encuentra el proyecto general ,al igual que algún archivo en relación al proyecto.
-- **100 puntos**: Se creó exitosamente el repositorio, donde en su rama principal se encuentra el proyecto general y sus archivos en relación a ello, con evidencia de la participación del equipo completo de manera periódica.
+----
 
+**CLASE CLIENTS**
+
+La clase clients maneja las operaciones relacionadas con la colección clientes en MongoDB. Hereda de la clase connect para gestionar la conexión a la base de datos y proporciona métodos para interactuar con la colección.
+
+
+**IMPORTACION**
+
+```javascript
+import { ObjectId } from "mongodb";
+import { connect } from "../../../helpers/db/connect.js";
+```
+
+**DESCRIPCION**
+
+La clase clients extiende la clase connect y utiliza el patrón Singleton para asegurar que solo haya una instancia de la clase. Ofrece métodos para obtener todos los clientes y para obtener clientes VIP basados en su tipo.
+
+**METODOS Y PROPIEDADES**
+
+```javascript
+constructor() 
+//Inicializa la clase clients. Implementa el patrón Singleton para asegurar que solo haya una instancia de la clase.
+```
+
+```javascript
+async initialize() 
+// Inicializa la conexión a la base de datos y obtiene la colección clientes. Asegúrate de llamar a este método antes de utilizar cualquier otro método de la clase.
+```
+
+```javascript
+async getAllClients() 
+//Obtiene todos los clientes de la colección clientes.
+// Retorna: Promise<Array<Client>> - Array con todos los clientes.
+```
+
+```javascript
+async vipClients(tipo_cliente_id)
+//Obtiene clientes VIP basados en su tipo de cliente.
+```
+
+**TIPOS DE DATOS**
+
+```javascript
+/**
+ * @typedef {Object} Client
+ * @property {string} idClient - ID del cliente.
+ * @property {string} name - Nombre del cliente.
+ * @property {string} email - Email del cliente.
+ * @property {string} telefono - Teléfono del cliente.
+ * @property {string} direccion - Dirección del cliente.
+ * @property {string} tipo_cliente_id - ID del tipo de cliente.
+ * @property {string} reservas - Reservas del cliente.
+ */
+```
+---
+**CLASE FUNCTIONS**
+
+La clase functions maneja las operaciones relacionadas con la colección funciones en MongoDB. Hereda de la clase connect para gestionar la conexión a la base de datos y proporciona métodos para interactuar con la colección.
+
+**DESCRIPCION**
+
+La clase functions extiende la clase connect y utiliza el patrón Singleton para asegurar que solo haya una instancia de la clase. Ofrece métodos para obtener todas las funciones, obtener funciones por ID de película, añadir reservas y eliminar reservas.
+
+**METODOS Y PROPIEDADES**
+
+
+```javascript
+async getAllFunctions()
+// Obtiene todas las funciones de la colección funciones.
+// Retorna: Promise<Array<Function>> - Array con todas las funciones.
+```
+
+```javascript
+async getFunctionsByMovieID(pelicula_id)
+// Obtiene las funciones basadas en el ID de la película.
+// parametro: pelicula_id (string) - ID de la película.
+// Retorna: Promise<Array<Function>> - Array con las funciones correspondientes.
+```
+
+```javascript
+async addBookingsByFunctionID(functionsID, newReservation)
+//Añade una nueva reserva a una función por su ID.
+// PARAMETROS: 
+// functionsID (ObjectId) - ID de la función.
+// newReservation (Reservation) - La nueva reserva a añadir.
+// Retorna: Promise<Object> - Documento de la función actualizado.
+```
+
+```javascript
+async removeBookingByFunctionID(functionsID, reservationToRemove)
+// PARAMETROS:
+//functionsID (ObjectId) - ID de la función de la que se desea eliminar la reserva.
+//reservationToRemove (Reservation) - La reserva que se desea eliminar.
+//Retorna: Promise<Object> - Documento de la función actualizado después de eliminar la reserva.
+```
+
+**TIPOS DE DATOS**
+
+```javascript
+//Function
+/**
+ * @typedef {Object} Function
+ * @property {string} functionsID - ID de la función.
+ * @property {string} pelicula_id - ID de la película.
+ * @property {string} cine_id - ID del cine.
+ * @property {string} fecha_hora - Fecha y hora de la función.
+ * @property {string} sala - Sala de cine.
+ * @property {string} asientos_disponibles - Asientos disponibles.
+ * @property {string} asientos_totales - Asientos totales.
+ * @property {string} precio - Precio.
+ */
+```
+```javascript
+//Reservation
+/**
+ * @typedef {Object} Reservation
+ * @property {string} asiento - Número de asiento.
+ * @property {ObjectId} cliente_id - ID del cliente.
+ */
+```
+
+---
+
+**CLASE MOVIES**
+
+La clase movies maneja las operaciones relacionadas con la colección peliculas en MongoDB. Hereda de la clase connect para gestionar la conexión a la base de datos y proporciona métodos para interactuar con la colección.
+
+**DESCRIPCION**
+
+La clase movies extiende la clase connect y utiliza el patrón Singleton para asegurar que solo haya una instancia de la clase. Ofrece métodos para obtener todas las películas, obtener una película por su ID y obtener funciones asociadas a una película.
+
+**METODOS Y PROPIEDADES**
+
+```javascript
+async getAllmovies()
+//Obtiene todos los documentos de la colección de películas, proyectando solo el título, ID, género y duración.
+//Retorna: Promise<Array<movies>> - Array con el resultado de la colección de películas.
+```
+
+```javascript
+async getMoviesByID(idMovies)
+//Obtiene los detalles completos de una película por su ID.
+// PARAMETRO: idMovies (string) - ID de la película.
+// Retorna: Promise<Array<movies>> - Array con el resultado de la película solicitada.
+```
+
+```javascript
+async getMovieFunctionsByID(idMovies)
+//Obtiene las funciones asociadas a una película por su ID, incluyendo la disponibilidad de asientos y horarios.
+// PARAMETRO: idMovies (string) - ID de la película.
+// Retorna: Promise<Array<Object>> - Array con el resultado de las funciones asociadas a la película.
+```
+
+**TIPOS DE DATOS**
+
+```javascript
+/**
+ * @typedef {Object} movies
+ * @property {string} _id - ID de la película.
+ * @property {string} titulo - Título de la película.
+ * @property {string} descripcion - Descripción de la película.
+ * @property {string} director - Director de la película.
+ * @property {string} actores - Actores de la película.
+ * @property {string} genero - Género de la película.
+ * @property {string} duracion - Duración de la película.
+ * @property {string} fecha_estreno - Fecha de estreno de la película.
+ * @property {string} calificacion - Calificación de la película.
+ * @property {string} idioma - Idioma de la película.
+ * @property {string} subtitulos - Subtítulos disponibles para la película.
+ * @property {string} formato - Formato de la película (2D, 3D, IMAX, etc.).
+ */
+```
+---
+
+**CLASE TICKETS**
+
+La clase tickets maneja las operaciones relacionadas con la colección boletos en MongoDB. Hereda de la clase connect para gestionar la conexión a la base de datos y proporciona métodos para interactuar con la colección.
+
+**DESCRIPCION**
+
+La clase tickets extiende la clase connect y utiliza el patrón Singleton para asegurar que solo haya una instancia de la clase. Ofrece métodos para obtener todos los tickets, obtener los asientos disponibles y ocupados, y agregar nuevos tickets.
+
+**METODOS Y PROPIEDADES**
+
+```javascript
+async getAll__BuyedTickets()
+//Obtiene todos los tickets comprados.
+//Retorna: Promise<Array<tickets>> - Array con el resultado de los tickets comprados.
+```
+
+```javascript
+async getAvailableSeatsByFunctionID(funcion_id)
+// Obtiene los asientos disponibles y totales para una función específica.
+// PARAMETRO: funcion_id (string) - ID de la función.
+// Retorna: Promise<Array<Object>> - Array con la información de los asientos disponibles y totales.
+```
+
+```javascript
+async getOccupiedSeatsByFunctionID(funcion_id)
+//Obtiene los asientos ocupados para una función específica.
+// PARAMETRO: funcion_id (string) - ID de la función.
+//Retorna: Promise<Array<Object>> - Array con la información de los asientos ocupados.
+```
+
+```javascript
+async addTicket(
+    funcion_id, // PARAMTROS 
+    cliente_id,
+    asiento,
+    precio,
+    fecha_compra,
+    descuento_aplicado,
+    método_pago,
+    hora_funcion
+)
+//Agrega un nuevo ticket para una función específica.
+// Retorna: Promise<Object> - Resultado de la inserción del ticket.
+```
+
+**TIPOS DE DATOS**
+```JAVASCRIPT
+/**
+ * @typedef {Object} tickets
+ * @property {string} idTickets - ID del ticket.
+ * @property {string} funcion_id - ID de la función.
+ * @property {string} cliente_id - ID del cliente.
+ * @property {string} asiento - Asiento asignado.
+ * @property {string} precio - Precio del ticket.
+ * @property {string} fecha_compra - Fecha de compra.
+ * @property {string} descuento_aplicado - Descuento aplicado.
+ * @property {string} método_pago - Método de pago.
+ */
+```
