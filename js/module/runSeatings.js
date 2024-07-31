@@ -3,16 +3,16 @@ import tickets from "./casesManagement/managementSeatings_Tickets.js"
 
 //____________________ ALL BUYED TICKETS ____________________________
 
-export const getAll__BuyedTickets =  async () => {
+export const getAll__BuyedTickets = async () => {
     let ticketsInstance = new tickets();
     await ticketsInstance.initialize();
-    try{
+    try {
         const ticket = await ticketsInstance.getAll__BuyedTickets();
         console.log("Tickets:", ticket);
         return ticket;
-    } catch (error){
+    } catch (error) {
         console.error("Error obtaining all tickets...", error);
-        throw error;;
+        throw error;
     } finally {
         await ticketsInstance.close();
     }
@@ -20,32 +20,33 @@ export const getAll__BuyedTickets =  async () => {
 
 //____________________ AVAILABLE SEATS ____________________________
 
-export const getAvailableSeatsByFunctionID =  async (funcion_id) => {
+export const getAvailableSeatsByFunctionID = async (funcion_id) => {
     let ticketsInstance = new tickets();
     await ticketsInstance.initialize();
-    try{
+    try {
         const ticket = await ticketsInstance.getAvailableSeatsByFunctionID(funcion_id);
         console.log("Tickets:", JSON.stringify(ticket, null, 2));
         return ticket;
-    } catch (error){
+    } catch (error) {
         console.error("Error obtaining available tickets...", error);
-        throw error;;
+        throw error;
     } finally {
         await ticketsInstance.close();
     }
 };
+
 //____________________ OCCUPIED SEATS BY FUNCTIONID____________________________
 
-export const getOccupiedSeatsByFunctionID =  async (funcion_id) => {
+export const getOccupiedSeatsByFunctionID = async (funcion_id) => {
     let ticketsInstance = new tickets();
     await ticketsInstance.initialize();
-    try{
+    try {
         const ticket = await ticketsInstance.getOccupiedSeatsByFunctionID(funcion_id);
         console.log("Tickets:", JSON.stringify(ticket, null, 2));
         return ticket;
-    } catch (error){
+    } catch (error) {
         console.error("Error obtaining occupied seats...", error);
-        throw error;;
+        throw error;
     } finally {
         await ticketsInstance.close();
     }
@@ -54,7 +55,6 @@ export const getOccupiedSeatsByFunctionID =  async (funcion_id) => {
 //____________________ ADD TICKET ____________________________
 
 export const addTicket = async(
-    idTickets,
     funcion_id,
     cliente_id,
     asiento,
@@ -63,12 +63,11 @@ export const addTicket = async(
     descuento_aplicado,
     método_pago,
     hora_funcion
-    ) => {
+) => {
     let ticketsInstance = new tickets();
     await ticketsInstance.initialize();
-    try{
+    try {
         const resultadoAgregar = await ticketsInstance.addTicket(
-            idTickets,
             funcion_id,
             cliente_id,
             asiento,
@@ -80,45 +79,47 @@ export const addTicket = async(
         );
         console.log("Resultado de Agregar Ticket:", resultadoAgregar);
         return resultadoAgregar;
-    } catch (error){
-        console.error("Error al agregar Ticket:", error);
+    } catch (error) {
+        console.log("Error al agregar ticket:", error);
+        if (error.errInfo && error.errInfo.details) {
+            console.log("Detalles del error:", JSON.stringify(error.errInfo.details, null, 2));
+        }
         throw error;
-    } finally{
+    } finally {
         await ticketsInstance.close();
     }
 };
-
 
 //___________________________________________________________________
 
 (async() => {
 
-//____________________ ALL BUYED TICKETS ____________________________
+    //____________________ ALL BUYED TICKETS ____________________________
 
-//    await getAll__BuyedTickets();
+    // await getAll__BuyedTickets();
 
-//____________________ AVAILABLE SEATS ____________________________
+    //____________________ AVAILABLE SEATS ____________________________
 
-//    let funcion_id = "64b28b5c3f8b9e6fdbc7feca";
-//    await getAvailableSeatsByFunctionID(funcion_id);
+    // let funcion_id = "64b28b5c3f8b9e6fdbc7feca";
+    // await getAvailableSeatsByFunctionID(funcion_id);
 
-//____________________ OCCUPIED SEATS BY FUNCTIONID____________________________
+    //____________________ OCCUPIED SEATS BY FUNCTIONID____________________________
 
-// let funcion_id = "64b28b5c3f8b9e6fdbc7feca";
-// await getOccupiedSeatsByFunctionID(funcion_id);
+    // let funcion_id = "64b28b5c3f8b9e6fdbc7feca";
+    // await getOccupiedSeatsByFunctionID(funcion_id);
 
-//____________________ ADD TICKET ____________________________
+    //____________________ ADD TICKET ____________________________
 
-    let funcion_id = new ObjectId('64b28b5c3f8b9e6fdbc7feca') ;
-    let cliente_id = new ObjectId('64b28b5c3f8b9e6fdbc7febd') ;
-    let asiento = 'F20' ;
-    let precio = 12.5 ;
-    let fecha_compra = new Date('2024-07-26"') ;
-    let descuento_aplicado = 0 ;
-    let método_pago = 'tarjeta de crédito' ;
-    let hora_funcion = '8:30'
-    
-    try{ 
+    let funcion_id = new ObjectId('64b28b5c3f8b9e6fdbc7feca');
+    let cliente_id = new ObjectId('64b28b5c3f8b9e6fdbc7febd');
+    let asiento = 'F20';
+    let precio = 12.5;
+    let fecha_compra = new Date('2024-07-26');
+    let descuento_aplicado = 0;
+    let método_pago = 'tarjeta de crédito';
+    let hora_funcion = '8:30';
+
+    try {
         await addTicket(
             funcion_id,
             cliente_id,
@@ -129,28 +130,11 @@ export const addTicket = async(
             método_pago,
             hora_funcion
         );
-    }catch (error) {
+    } catch (error) {
         console.log("Error al agregar ticket:", error);
-        console.log("Detalles del error:", JSON.stringify(error.errInfo.details, null, 2));
+        if (error.errInfo && error.errInfo.details) {
+            console.log("Detalles del error:", JSON.stringify(error.errInfo.details, null, 2));
+        }
     }
 
 })();
-
-        // {
-        //     "_id": {
-        //       "$oid": "64b28b5c3f8b9e6fdbc7feca"
-        //     },
-        //     "funcion_id": {
-        //       "$oid": "64b28b5c3f8b9e6fdbc7feca"
-        //     },
-        //     "cliente_id": {
-        //       "$oid": "64b28b5c3f8b9e6fdbc7febd"
-        //     },
-        //     "asiento": "F12",
-        //     "precio": 12.5,
-        //     "fecha_compra": {
-        //       "$date": "2024-07-26T15:30:00.000Z"
-        //     },
-        //     "descuento_aplicado": 0,
-        //     "método_pago": "tarjeta de crédito"
-        //   }

@@ -1,81 +1,72 @@
 import { ObjectId } from "mongodb";
 import { connect } from "../../../helpers/db/connect.js";
 
-class tickets extends connect{
+class tickets extends connect {
     static instance;
 
-    constructor(){
+    constructor() {
         super();
-        if(typeof tickets.instance === "object"){
+        if (typeof tickets.instance === "object") {
             return tickets.instance;
         }
         tickets.instance = this;
         return this;
     }
-    async initialize(){
+
+    async initialize() {
         await this.open();
-        this.collection = this.db.collection("boletos")
+        this.collection = this.db.collection("boletos");
     }
-//____________________ ALL BUYED TICKETS ____________________________
+
+    //____________________ ALL BUYED TICKETS ____________________________
 
     /**
      * @typedef {Object} tickets
-     * @property {string} idTickets - tickets id.
-     * @property {string} funcion_id - function id .
-     * @property {string} cliente_id - client id.
-     * @property {string}  asiento - asigned seat.
-     * @property {string}  precio - ticket price.
-     * @property {string}  fecha_compra - date of purchase.
-     * @property {string}  descuento_aplicado - applied discount.
-     * @property {string}  método_pago - payment method.
-     */
-    /**
-     * get the result of the collection.
-     * @returns {Promise<Array<tickets>>} - Array with the result of tickets.
+     * @property {string} idTickets - ID del ticket.
+     * @property {string} funcion_id - ID de la función.
+     * @property {string} cliente_id - ID del cliente.
+     * @property {string} asiento - Asiento asignado.
+     * @property {string} precio - Precio del ticket.
+     * @property {string} fecha_compra - Fecha de compra.
+     * @property {string} descuento_aplicado - Descuento aplicado.
+     * @property {string} método_pago - Método de pago.
      */
 
-    async getAll__BuyedTickets(){
-        let res = await this.collection.find(
-            {}
-        ).toArray();
+    /**
+     * Obtiene todos los tickets comprados.
+     * @returns {Promise<Array<tickets>>} - Array con el resultado de los tickets comprados.
+     * @throws {Error} - Lanza un error si ocurre algún problema al obtener los tickets.
+     */
+    async getAll__BuyedTickets() {
+        let res = await this.collection.find({}).toArray();
         return res;
-    } 
+    }
 
-//____________________ AVAILABLE SEATS ____________________________
-    
-    /**
-     * @typedef {Object} tickets
-     * @property {string} idTickets - tickets id.
-     * @property {string} funcion_id - function id .
-     * @property {string} cliente_id - client id.
-     * @property {string}  asiento - asigned seat.
-     * @property {string}  precio - ticket price.
-     * @property {string}  fecha_compra - date of purchase.
-     * @property {string}  descuento_aplicado - applied discount.
-     * @property {string}  método_pago - payment method.
-     */
-    /**
-     * get the result of the collection.
-     * @returns {Promise<Array<tickets>>} - Array with the result of tickets.
-     */
+    //____________________ AVAILABLE SEATS ____________________________
 
-async getAvailableSeatsByFunctionID(funcion_id){
-    let res = await this.collection.aggregate([
-        { $match: { _id: new ObjectId(funcion_id ) } },
-        {
-            $lookup: {
-                from: "funciones",
-                localField: "funcion_id",
-                foreignField: "_id",
-                as: "asientos disponibles y totales",
+    /**
+     * Obtiene los asientos disponibles y totales para una función específica.
+     * @param {string} funcion_id - ID de la función.
+     * @returns {Promise<Array<Object>>} - Array con la información de los asientos disponibles y totales.
+     * @throws {Error} - Lanza un error si ocurre algún problema al obtener los asientos disponibles.
+     */
+    async getAvailableSeatsByFunctionID(funcion_id) {
+        let res = await this.collection.aggregate([
+            { $match: { _id: new ObjectId(funcion_id) } },
+            {
+                $lookup: {
+                    from: "funciones",
+                    localField: "funcion_id",
+                    foreignField: "_id",
+                    as: "asientos disponibles y totales",
                     pipeline: [
                         {
-                    $project: {
-                        '_id': 0,
-                        'asientos_disponibles': 1,
-                        'asientos_totales':1
+                            $project: {
+                                '_id': 0,
+                                'asientos_disponibles': 1,
+                                'asientos_totales': 1
+                            }
                         }
-                    }
                     ]
                 }
             },
@@ -84,58 +75,48 @@ async getAvailableSeatsByFunctionID(funcion_id){
                     '_id': 0,
                     'asientos disponibles y totales': 1
                 }
-                }
-            ]).toArray();
-            return res;
-        }
+            }
+        ]).toArray();
+        return res;
+    }
 
-//____________________ OCCUPIED SEATS BY FUNCTIONID____________________________
+    //____________________ OCCUPIED SEATS BY FUNCTIONID ____________________________
 
     /**
-     * @typedef {Object} tickets
-     * @property {string} idTickets - tickets id.
-     * @property {string} funcion_id - function id .
-     * @property {string} cliente_id - client id.
-     * @property {string}  asiento - asigned seat.
-     * @property {string}  precio - ticket price.
-     * @property {string}  fecha_compra - date of purchase.
-     * @property {string}  descuento_aplicado - applied discount.
-     * @property {string}  método_pago - payment method.
+     * Obtiene los asientos ocupados para una función específica.
+     * @param {string} funcion_id - ID de la función.
+     * @returns {Promise<Array<Object>>} - Array con la información de los asientos ocupados.
+     * @throws {Error} - Lanza un error si ocurre algún problema al obtener los asientos ocupados.
      */
-    /**
-     * get the result of the collection.
-     * @returns {Promise<Array<tickets>>} - Array with the result of tickets.
-     */
-    async getOccupiedSeatsByFunctionID(funcion_id){
+    async getOccupiedSeatsByFunctionID(funcion_id) {
         let res = await this.collection.find(
-            {"_id": new ObjectId(funcion_id)},
+            { "funcion_id": new ObjectId(funcion_id) },
             {
-                projection:{
-                    "_id":0,
-                    "asiento":1,
-                    "cliente_id":1
+                projection: {
+                    "_id": 0,
+                    "asiento": 1,
+                    "cliente_id": 1
                 }
             }
         ).toArray();
         return res;
     }
-//____________________ ADD TICKET ____________________________
+
+    //____________________ ADD TICKET ____________________________
+
     /**
-     * @typedef {Object} tickets
-     * @property {string} idTickets - tickets id.
-     * @property {string} funcion_id - function id .
-     * @property {string} cliente_id - client id.
-     * @property {string}  asiento - asigned seat.
-     * @property {string}  precio - ticket price.
-     * @property {string}  fecha_compra - date of purchase.
-     * @property {string}  descuento_aplicado - applied discount.
-     * @property {string}  método_pago - payment method.
+     * Agrega un nuevo ticket para una función específica.
+     * @param {string} funcion_id - ID de la función.
+     * @param {string} cliente_id - ID del cliente.
+     * @param {string} asiento - Asiento asignado.
+     * @param {string} precio - Precio del ticket.
+     * @param {string} fecha_compra - Fecha de compra.
+     * @param {string} descuento_aplicado - Descuento aplicado.
+     * @param {string} método_pago - Método de pago.
+     * @param {string} hora_funcion - Hora de la función.
+     * @returns {Promise<Object>} - Resultado de la inserción del ticket.
+     * @throws {Error} - Lanza un error si ocurre algún problema al agregar el ticket.
      */
-    /**
-     * get the result of the collection.
-     * @returns {Promise<Array<tickets>>} - Array with the result of tickets.
-     */
-    
     async addTicket(
         funcion_id,
         cliente_id,
@@ -144,8 +125,9 @@ async getAvailableSeatsByFunctionID(funcion_id){
         fecha_compra,
         descuento_aplicado,
         método_pago,
-        hora_funcion){
-        console.log("Adding Ticket",{
+        hora_funcion
+    ) {
+        console.log("Adding Ticket", {
             funcion_id,
             cliente_id,
             asiento,
@@ -153,50 +135,54 @@ async getAvailableSeatsByFunctionID(funcion_id){
             fecha_compra,
             descuento_aplicado,
             método_pago,
-            hora_funcion});
-        try{
+            hora_funcion
+        });
 
+        try {
             const asientoExistente = await this.collection.findOne({
                 funcion_id: new ObjectId(funcion_id),
                 asiento: asiento
             });
+
             if (asientoExistente) {
-                throw new Error('El asiento ya esta ocupado.');
+                throw new Error('El asiento ya está ocupado.');
             }
+
             // Verificar si hay asientos disponibles en la colección funciones
             const funcionesCollection = this.db.collection('funciones');
             const funcion = await funcionesCollection.findOne({
-            _id: new ObjectId(funcion_id),
-            asientos_disponibles: { $gt: 0 }
+                _id: new ObjectId(funcion_id),
+                asientos_disponibles: { $gt: 0 }
             });
 
             if (!funcion) {
-            throw new Error('No hay asientos disponibles.');
+                throw new Error('No hay asientos disponibles.');
             }
 
             // Actualizar el número de asientos disponibles
             await funcionesCollection.updateOne(
-            { _id: new ObjectId(funcion_id) },
-            { $inc: { asientos_disponibles: -1 } }
+                { _id: new ObjectId(funcion_id) },
+                { $inc: { asientos_disponibles: -1 } }
             );
-            
+
             const resultado = await this.collection.insertOne({
-            funcion_id: new ObjectId(funcion_id),
-            cliente_id: new ObjectId(cliente_id),
-            asiento: asiento,
-            precio: precio,
-            fecha_compra: new Date(fecha_compra),
-            descuento_aplicado: descuento_aplicado,
-            método_pago: método_pago,
-            hora_funcion: hora_funcion
+                funcion_id: new ObjectId(funcion_id),
+                cliente_id: new ObjectId(cliente_id),
+                asiento: asiento,
+                precio: precio,
+                fecha_compra: new Date(fecha_compra),
+                descuento_aplicado: descuento_aplicado,
+                método_pago: método_pago,
+                hora_funcion: hora_funcion
             });
+
             console.log("Resultado:", resultado);
             return resultado;
-        } catch(error){
+        } catch (error) {
             console.error("Error al comprar Ticket", error);
             throw error;
         }
     }
-
 }
+
 export default tickets;
