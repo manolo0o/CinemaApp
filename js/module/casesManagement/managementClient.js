@@ -30,6 +30,7 @@ class clients extends connect {
         this.collection = this.db.collection("clientes");
     }
 
+
     // ______________________ ALL CLIENTS ________________________
 
     /**
@@ -100,6 +101,95 @@ class clients extends connect {
         ]).toArray();
         return res;
     }
+
+// ______________________ CREATE USER ________________________
+
+/**
+ * Inserta un nuevo usuario en la colección 'clientes' y crea un usuario en MongoDB con el rol especificado.
+ *
+ * Este método realiza las siguientes acciones:
+ * 1. Inserta el documento del usuario en la colección 'clientes'.
+ * 2. Valida el rol y las credenciales del usuario.
+ * 3. Crea un usuario en MongoDB con el rol especificado si el rol es válido.
+ *
+ * @param {Object} user - El objeto de usuario a insertar y crear. Debe tener las siguientes propiedades:
+ *   @param {string} user.email - El correo electrónico del usuario, usado como nombre de usuario para el usuario en MongoDB.
+ *   @param {string} user.password - La contraseña para el usuario en MongoDB.
+ *   @param {string} user.rol - El rol del usuario. Debe ser 'user' o 'admin'.
+ *   @param {string} user.nombre - El nombre del usuario.
+ *   @param {string} user.telefono - El número de teléfono del usuario.
+ *   @param {string} user.direccion - La dirección del usuario.
+ *   @param {ObjectId} user.tipo_cliente_id - El ObjectId del tipo de cliente asociado con el usuario.
+ *
+ * @returns {Promise<Object>} - Una promesa que se resuelve con el resultado del comando MongoDB para crear el usuario.
+ *
+ * @throws {Error} - Lanza un error si el rol es inválido o si ocurre un error al crear el usuario en MongoDB.
+ */
+async insertUser(user) {
+    // Insertar el usuario en la colección 'clientes'
+    const result = await this.collection.insertOne(user);
+    console.log('Usuario insertado con id:', result.insertedId);
+
+    // Asegurar que el rol y las credenciales sean válidos antes de crear el usuario en MongoDB
+    if (user.rol === "user" || user.rol === "admin") {
+        try {
+            const createUserResult = await this.db.command({
+                createUser: user.email, // Suponiendo que 'email' se usa como nombre de usuario
+                pwd: user.password, // Asegúrate de que 'password' se usa para la contraseña
+                roles: [{ role: user.rol, db: "CineCampus" }] // Usa la base de datos correcta
+            });
+            console.log("Usuario en MongoDB creado con éxito.");
+            return createUserResult;
+        } catch (error) {
+            console.error("Error al crear el usuario en MongoDB:", error);
+            throw error;
+        }
+    } else {
+        console.log("Error: Rol inválido");
+        throw new Error("Rol inválido");
+    }
+}
+
+// ______________________ REMOVE USER ________________________
+
+/**
+ * Elimina un usuario de la colección 'clientes' y también lo elimina de la base de datos MongoDB.
+ *
+ * Este método realiza las siguientes acciones:
+ * 1. Elimina el documento del usuario de la colección 'clientes'.
+ * 2. Elimina el usuario de la base de datos MongoDB.
+ *
+ * @param {string} email - El correo electrónico del usuario a eliminar. Se utiliza tanto para eliminar el documento en la colección como para eliminar el usuario en MongoDB.
+ *
+ * @returns {Promise<Object>} - Una promesa que se resuelve con el resultado del comando MongoDB para eliminar el usuario.
+ *
+ * @throws {Error} - Lanza un error si ocurre un problema al eliminar el usuario de la colección o de la base de datos MongoDB.
+ */
+async deleteUser(email) {
+    try {
+        // Eliminar el usuario de la colección 'clientes'
+        const deleteFromCollectionResult = await this.collection.deleteOne({ email: email });
+        if (deleteFromCollectionResult.deletedCount === 0) {
+            console.log("Error: Usuario no encontrado en la colección 'clientes'.");
+            return;
+        }
+        console.log('Usuario eliminado de la colección con el email:', email);
+
+        // Eliminar el usuario de la base de datos MongoDB
+        const deleteUserResult = await this.db.command({
+            dropUser: email
+        });
+
+        console.log('Usuario en MongoDB eliminado con éxito.');
+        return deleteUserResult;
+    } catch (error) {
+        console.error("Error al eliminar el usuario:", error);
+        throw error;
+    }
+}
+
+
+
 }
 
 export default clients;
