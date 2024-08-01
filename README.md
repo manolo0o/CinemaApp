@@ -1,3 +1,18 @@
+**VARIABLES DE ENTORNO**
+```javascript
+//Plantilla
+MONGO_USER=mongo
+MONGO_PORT=
+MONGO_PWD=
+MONGO_HOST=mongodb://
+MONGO_CLUSTER=monorail.proxy.rlwy.net
+MONGO_DB=
+```
+
+```javascript
+//Cadena de conexion
+mongodb://mongo:DMbBMChuOpHoOzZLdxEvLaqYrgubFtnx@monorail.proxy.rlwy.net:28015/
+```
 **CONEXION A MONGODB**
 
 Este módulo proporciona una clase para gestionar la conexión a una base de datos MongoDB utilizando las credenciales almacenadas en un archivo .env. La clase implementa el patrón de diseño Singleton para asegurar que solo haya una instancia de conexión a la base de datos en la aplicación.

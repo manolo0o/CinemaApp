@@ -10,7 +10,6 @@
     "movies": "node --watch --env-file=.env js/module/runMovies.js",
     "functions": "node --watch --env-file=.env js/module/runFunctions.js",
     "seatings": "node --watch --env-file=.env js/module/runSeatings.js"
-    
   },
   "keywords": [],
   "author": "",
