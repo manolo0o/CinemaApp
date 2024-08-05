@@ -63,7 +63,7 @@ export class connect {
 
     async open() {
         // Construcción de la URI con las credenciales del archivo .env
-        const uri = `${this.getHost}${this.user}:${this.getPass}@${this.getCluster}:${this.port}`;
+        const uri = `${this.getHost}${this.user}:${this.getPass}@${this.getCluster}:${this.port}/${this.getDbName}`;
         console.log(uri);  // Imprimir la URI para verificar que se construya correctamente
         this.conexion = new MongoClient(uri);
         await this.conexion.connect();

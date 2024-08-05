@@ -14,7 +14,7 @@ export const getAllFunctions = async () => {
     await functionInstance.initialize();
     try {
         const Function = await functionInstance.getAllFunctions();
-        console.log("functions:", Function);
+        console.log("functions:", JSON.stringify(Function, null, 2));
         return Function;
     } catch (error) {
         console.error("Error obtaining all functions...", error);
@@ -103,7 +103,7 @@ export const removeBookingByFunctionID = async (functionsID, reservationToRemove
 (async () => {
     //____________________ GET ALL FUNCTIONS ____________________________
 
-    // await getAllFunctions();
+    await getAllFunctions();
 
     //____________________ FUNCTION HOURS BY MOVIE ID ____________________________
 
@@ -129,18 +129,18 @@ export const removeBookingByFunctionID = async (functionsID, reservationToRemove
 
     //____________________ DELETE BOOKING BY FUNCTION ID ____________________________
 
-    let funcion_id = new ObjectId('66a9c051bf1f3519f6394c29');
-    let cliente_id = new ObjectId('64b28b5c3f8b9e6fdbc7febd');
-    let asiento = 'F20';
+    // let funcion_id = new ObjectId('66a9c051bf1f3519f6394c29');
+    // let cliente_id = new ObjectId('64b28b5c3f8b9e6fdbc7febd');
+    // let asiento = 'F20';
     
-    let reservationToRemove = {
-        asiento: asiento,
-        cliente_id: cliente_id
-    };
+    // let reservationToRemove = {
+    //     asiento: asiento,
+    //     cliente_id: cliente_id
+    // };
 
-    try {
-        await removeBookingByFunctionID(funcion_id, reservationToRemove);
-    } catch (error) {
-        console.log("Error removing reservation:", error);
-    }
+    // try {
+    //     await removeBookingByFunctionID(funcion_id, reservationToRemove);
+    // } catch (error) {
+    //     console.log("Error removing reservation:", error);
+    // }
 })();
