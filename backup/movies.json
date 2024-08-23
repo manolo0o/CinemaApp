@@ -1,30 +1,26 @@
 [
     {
-    "_id": { "$oid": "64b28b5c3f8b9e6fdbc7febe" },
-    "titulo": "El Señor de los Anillos: La Comunidad del Anillo",
-    "descripcion": "Un joven hobbit y sus amigos emprenden una aventura para destruir un anillo malvado.",
-    "director": "Peter Jackson",
-    "actores": ["Elijah Wood", "Ian McKellen", "Viggo Mortensen"],
-    "genero": "Fantasía",
-    "duracion": 178,
-    "fecha_estreno": { "$date": "2001-12-19T00:00:00Z" },
-    "calificacion": 9,
-    "idioma": "Inglés",
-    "subtitulos": ["Español", "Francés"],
-    "formato": "2D"
-    },
-    {
-    "_id": { "$oid": "64b28b5c3f8b9e6fdbc7febf" },
-    "titulo": "Inception",
-    "descripcion": "Un ladrón que roba secretos corporativos mediante el uso de tecnología de sueño compartido.",
-    "director": "Christopher Nolan",
-    "actores": ["Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page"],
-    "genero": "Ciencia Ficción",
-    "duracion": 148,
-    "fecha_estreno": { "$date": "2010-07-16T00:00:00Z" },
-    "calificacion": 8,
-    "idioma": "Inglés",
-    "subtitulos": ["Español", "Alemán"],
-    "formato": "IMAX"
-    }
+        "_id": {
+          "$oid": "64b28b5c3f8b9e6fdbc7febe"
+        },
+        "titulo": "El Señor de los Anillos: La Comunidad del Anillo",
+        "descripcion": "Un joven hobbit y sus amigos emprenden una aventura para destruir un anillo malvado.",
+        "director": "Peter Jackson",
+        "actores": [
+          "Elijah Wood",
+          "Ian McKellen",
+          "Viggo Mortensen"
+        ],
+        "genero": "Fantasía",
+        "duracion": 178,
+        "fecha_estreno": {
+          "$date": "2001-12-19T00:00:00.000Z"
+        },
+        "idioma": "Inglés",
+        "subtitulos": [
+          "Español",
+          "Francés"
+        ],
+        "formato": "2D"
+      }
 ]

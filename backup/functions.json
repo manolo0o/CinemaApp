@@ -1,46 +1,27 @@
 [
     {
         "_id": {
-        "$oid": "64b28b5c3f8b9e6fdbc7feca"
+            "$oid": "66c8fd9320d99a3c7f0ff406"
         },
-        "pelicula_id": {
-        "$oid": "64b28b5c3f8b9e6fdbc7febe"
+        "id_movies": {
+            "$oid": "64b28b5c3f8b9e6fdbc7febe"
         },
-        "cine_id": {
-        "$oid": "64b28b5c3f8b9e6fdbc7febd"
+        "room_id": {
+            "$oid": "66c8f85f20d99a3c7f0ff3f5"
         },
-        "sala": "Sala 1",
-        "asientos_disponibles": 49,
-        "asientos_totales": 50,
-        "precio": 12.5,
-        "fecha_fin": {
-        "$date": "2024-08-26T15:30:00.000Z"
+        "function_hour": "3:30",
+        "start_date": {
+            "$date": "2024-07-24T16:30:00.000Z"
         },
-        "fecha_inicio": {
-        "$date": "2024-07-26T15:30:00.000Z"
+        "end_date": {
+            "$date": "2024-09-24T16:30:00.000Z"
         },
-        "horas": [ "8:30" ]
-    },
-    {
-        "_id": {
-        "$oid": "64b28b5c3f8b9e6fdbc7fecb"
-        },
-        "pelicula_id": {
-        "$oid": "64b28b5c3f8b9e6fdbc7febf"
-        },
-        "cine_id": {
-        "$oid": "64b28b5c3f8b9e6fdbc7febd"
-        },
-        "sala": "Sala 2",
-        "asientos_disponibles": 49,
-        "asientos_totales": 50,
-        "precio": 15.01,
-        "fecha_fin": {
-        "$date": "2024-09-24T16:30:00.000Z"
-        },
-        "fecha_inicio": {
-        "$date": "2024-07-24T16:30:00.000Z"
-        },
-        "horas": [ "15:30" ]
+        "seatings": [
+            {
+            "seat_number": "A1",
+            "status": "available"
+            }
+        ]
     }
 ]
+
