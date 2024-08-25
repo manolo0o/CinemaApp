@@ -5,18 +5,17 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "node --watch --env-file=.env main.js",
-    "clients": "node --watch --env-file=.env js/module/runClients.js",
-    "movies": "node --watch --env-file=.env js/module/runMovies.js",
-    "functions": "node --watch --env-file=.env js/module/runFunctions.js",
-    "seatings": "node --watch --env-file=.env js/module/runSeatings.js"
-    
+    "dev": "node --watch --env-file=.env main.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.4.5",
-    "mongo": "^0.1.0"
+    "express": "^4.19.2",
+    "mongo": "^0.1.0",
+    "mongodb": "^6.8.0",
+    "mongoose": "^8.5.4",
+    "nodemon": "^3.1.4"
   }
 }
