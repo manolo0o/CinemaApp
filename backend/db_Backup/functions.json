@@ -1,9 +1,6 @@
 [
     {
-        "_id": {
-            "$oid": "66c8fd9320d99a3c7f0ff406"
-        },
-        "id_movies": {
+        "id_movie": {
             "$oid": "64b28b5c3f8b9e6fdbc7febe"
         },
         "room_id": {

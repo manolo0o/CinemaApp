@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const Rooms = require('./models/rooms.Models.cjs')
+// const Rooms = require('./models/rooms.Models.cjs')
 const roomsRoute = require('./routes/rooms.Routes.cjs')
 const app = express();
 
@@ -11,12 +11,12 @@ app.use(express.urlencoded({extended: false}));
 
 // routes
 app.use("/rooms", roomsRoute)
-
+// app.use("/clients", clientsRoute)
 
 // test
-app.get('/', (req,res) => {
-    res.send('hello from node API updated')
-})
+// app.get('/', (req,res) => {
+//     res.send('hello from node API updated')
+// })
 
 
 mongoose
