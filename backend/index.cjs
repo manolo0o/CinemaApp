@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 // const Rooms = require('./models/rooms.Models.cjs')
 const roomsRoute = require('./routes/rooms.Routes.cjs')
+const clientsRoute = require('./routes/clients.Routes.cjs')
 const app = express();
 
 // middleware
@@ -11,7 +12,7 @@ app.use(express.urlencoded({extended: false}));
 
 // routes
 app.use("/rooms", roomsRoute)
-// app.use("/clients", clientsRoute)
+app.use("/clients", clientsRoute)
 
 // test
 // app.get('/', (req,res) => {
