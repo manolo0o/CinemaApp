@@ -1,9 +1,0 @@
-[
-    {
-        "_id": {
-          "$oid": "66c8f85f20d99a3c7f0ff3f5"
-        },
-        "nombre": "sala central",
-        "asientos": []
-      }
-]
