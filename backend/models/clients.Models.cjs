@@ -23,14 +23,14 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: false,
         },
-        booking: {
+        bookings: {
             type: [mongoose.Schema.Types.ObjectId],
             ref: 'booking',
             default: [],
         },
         }, 
         {
-            timestamps: true,
+            versionKey: false   
         });
 
 module.exports = mongoose.model('user_client', userSchema);
