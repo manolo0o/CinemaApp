@@ -33,4 +33,6 @@ const userSchema = new mongoose.Schema(
             versionKey: false   
         });
 
-module.exports = mongoose.model('user_client', userSchema);
+const Clients = mongoose.model('user_client', userSchema);
+
+module.exports = Clients;

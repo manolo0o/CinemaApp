@@ -39,6 +39,6 @@ const functionSchema = new mongoose.Schema({
         versionKey: false   
 });
 
-const Function = mongoose.model('Functions', functionSchema);
+const funciones = mongoose.model('Functions', functionSchema);
 
-module.exports = Function;
+module.exports = funciones;

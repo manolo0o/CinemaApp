@@ -35,7 +35,7 @@ const createFunction = async(req,res) => {
 };
 
 //_________________________________________________
-// UPDATE CLIENT BY ID 
+// UPDATE FUNCTION BY ID 
 const updateFunction = async(req,res) => {
     try{
         const { id } = req.params;
@@ -43,7 +43,7 @@ const updateFunction = async(req,res) => {
         const functioN = await funciones.findByIdAndUpdate(id, req.body);
         
         if (!functioN) {
-            res.status(404).json({message: 'User not found'});
+            res.status(404).json({message: 'Function not found'});
         }
 
         const updatedFunction = await funciones.findById(id);
@@ -63,10 +63,10 @@ const deleteFunction = async(req,res) => {
         const functioN = await funciones.findByIdAndDelete(id);
         
         if (!functioN) {
-            res.status(404).json({message: 'client not found'});
+            res.status(404).json({message: 'Function not found'});
         }
 
-        res.status(200).json({message: 'The client was successfully deleted.'});
+        res.status(200).json({message: 'The Function was successfully deleted.'});
     } catch (error) {
         res.status(500).json({ message: error.message})
     }

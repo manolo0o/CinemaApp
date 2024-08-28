@@ -5,6 +5,7 @@ const roomsRoute = require('./routes/rooms.Routes.cjs')
 const clientsRoute = require('./routes/clients.Routes.cjs')
 const moviesRoute = require('./routes/movies.Routes.cjs')
 const functidonsRoute = require('./routes/function.Routes.cjs')
+const ticketsRoute = require('./routes/tickets.Routes.cjs')
 
 const app = express();
 // const Rooms = require('./models/rooms.Models.cjs')
@@ -18,7 +19,7 @@ app.use("/rooms", roomsRoute)
 app.use("/clients", clientsRoute)
 app.use("/movies", moviesRoute)
 app.use("/functions", functidonsRoute)
-
+app.use("/tickets", ticketsRoute)
 
 // conection
 mongoose
