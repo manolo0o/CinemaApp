@@ -54,7 +54,7 @@ const updateClient = async(req,res) => {
 };
 
 //_________________________________________________
-// DELETE A ROOM BY ITS ID
+// DELETE A CLIENT BY ITS ID
 
 const deleteClient = async(req,res) => {
     try{
