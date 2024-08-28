@@ -23,6 +23,11 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: false,
         },
+        status:{
+            type: String,
+            enum: ['VIP', 'REGULAR'],
+            required: true,
+        },
         bookings: {
             type: [mongoose.Schema.Types.ObjectId],
             ref: 'booking',

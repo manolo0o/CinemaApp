@@ -14,12 +14,12 @@ const seatingSchema = new mongoose.Schema({
 const functionSchema = new mongoose.Schema({
     movie_id: { 
         type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Movie', 
+        ref: 'Movies', 
         required: true 
     },
     room_id: { 
         type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Room', 
+        ref: 'Rooms', 
         required: true 
     },
     function_hour: { 
