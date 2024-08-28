@@ -8,7 +8,7 @@ const {
     createMovie,
     updateMovie,
     deleteMovie
-} = require ('../controllers/movies.Controller.cjs')
+} = require('../controllers/movies.Controller.cjs')
 
 //FIND
 router.get('/', getMovies);
