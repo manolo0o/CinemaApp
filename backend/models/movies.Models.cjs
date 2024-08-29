@@ -39,6 +39,10 @@ const movieSchema = new mongoose.Schema({
     format: { 
         type: String, 
         required: true 
+    }, 
+    image: { 
+        type: String, 
+        required: true 
     }
     },{
         versionKey: false   

@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const Connect = require('./config/database_connect.cjs')
+const cors = require('cors');
 const db = new Connect();
 
 //ROUTES IMPORT
@@ -11,6 +12,7 @@ const functidonsRoute = require('./routes/function.Routes.cjs')
 const ticketsRoute = require('./routes/tickets.Routes.cjs')
 
 const app = express();
+app.use(cors());
 
 // MIDDLEWARE
 app.use(express.json());
@@ -25,10 +27,8 @@ app.use("/tickets", ticketsRoute)
 
 
 app.listen(3000, () => {
-    console.log('Server is running on port 3000');
+    console.log('Server running on http://localhost:3000');
 });
-
-
 
 
 
