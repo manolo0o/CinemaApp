@@ -2,55 +2,58 @@ import React, { useState, useEffect, useRef } from 'react';
 import './movies.css';
 
 function MovieDisplay() {
-  const [movies, setMovies] = useState([]);
-  const movieListRef = useRef(null);
+const [movies, setMovies] = useState([]);
+const movieListRef = useRef(null);
 
-  useEffect(() => {
+useEffect(() => {
     fetch('http://localhost:3000/movies')
-      .then(response => response.json())
-      .then(data => {
+    .then(response => response.json())
+    .then(data => {
         // Duplicamos las películas varias veces para crear un loop inicial
         let initialMovies = [];
         for (let i = 0; i < 5; i++) {
-          initialMovies = [...initialMovies, ...data];
+        initialMovies = [...initialMovies, ...data];
         }
         setMovies(initialMovies);
-      })
-      .catch(error => console.error('Error fetching movies:', error));
-  }, []);
+    })
+    .catch(error => console.error('Error fetching movies:', error));
+}, []);
 
-  useEffect(() => {
+useEffect(() => {
     const movieList = movieListRef.current;
 
     const cloneMoviesIfNeeded = () => {
       // Si el usuario está cerca del final de la lista, duplicamos las películas nuevamente
-      if (movieList.scrollLeft + movieList.clientWidth >= movieList.scrollWidth - 100) {
+    if (movieList.scrollLeft + movieList.clientWidth >= movieList.scrollWidth - 100) {
         setMovies(prevMovies => [...prevMovies, ...prevMovies.slice(0, prevMovies.length / 5)]);
-      }
+    }
     };
 
     movieList.addEventListener('scroll', cloneMoviesIfNeeded);
 
     return () => movieList.removeEventListener('scroll', cloneMoviesIfNeeded);
-  }, [movies]);
+}, [movies]);
 
-  return (
-    <div className="movieContainer">
-      <header>
+return (
+<div className="movieContainer">
+    <header>
         <h1>Now playing</h1>
-      </header>
-      <ul className="movie-list" ref={movieListRef}>
+    </header>
+    <ul className="movie-list" ref={movieListRef}>
         {movies.map((movie, index) => (
-          <li key={index} className="movie-item">
+        <li key={index} className="movie-item">
             <div className="movie-image">
-              <img src={movie.image} alt={movie.title} />
-              <h2>{movie.title}</h2>
+            <img src={movie.image} alt={movie.title} />
+                <div className="contentContainerMovies">
+                    <h2>{movie.title}</h2>
+                    <p>{movie.genre}</p>
+                </div>
             </div>
-          </li>
+        </li>
         ))}
-      </ul>
-    </div>
-  );
+    </ul>
+</div>
+);
 }
 
 export default MovieDisplay;

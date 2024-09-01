@@ -5,12 +5,6 @@ body {
   overflow-x: hidden;
 }
 
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -26,12 +20,7 @@ img {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.movieContainer {
-  width: 100%;
-  max-width: 100%;
-  margin: 0 auto;
-  padding: 0;
-}
+
 
 /* a {
   font-weight: 500;

@@ -1,0 +1,34 @@
+.fatherContainer{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-evenly;
+    border: 1px solid white;
+}
+
+.clientImg{
+    display: flex;
+    align-items: center;
+    max-width: 12%;
+    padding: .7rem;
+    border: 1px solid white;
+}
+.clientImg img{
+    border-radius: 10vh;
+    width: 100%;
+}
+
+.notificationContainer{
+    border: 1px solid white;
+    display: flex;
+    align-items: center;
+}
+.notificationContainer i{
+    font-size: 2rem;
+}
+.iconContainer{
+    border: 1px solid white;
+    border-radius: .7rem;
+    padding: .5rem;
+}
+
