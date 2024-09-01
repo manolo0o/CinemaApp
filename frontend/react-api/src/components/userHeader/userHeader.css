@@ -1,34 +1,44 @@
 .fatherContainer{
     width: 100%;
-    height: auto;
+    height: 9vh;
     display: flex;
-    justify-content: space-evenly;
-    border: 1px solid white;
+    justify-content: center;
 }
 
 .clientImg{
     display: flex;
     align-items: center;
     max-width: 12%;
-    padding: .7rem;
-    border: 1px solid white;
+    padding: 2vw;
 }
 .clientImg img{
     border-radius: 10vh;
     width: 100%;
 }
+.contentContainer{
+    width: fit-content;
+    height: fit-content;
+}
+.contentContainer p{
+    font-size: .75rem;
+}
+.text1{
+    opacity: 60%;
+}
 
 .notificationContainer{
-    border: 1px solid white;
     display: flex;
     align-items: center;
-}
-.notificationContainer i{
-    font-size: 2rem;
+    padding: 2vw;
+    padding-left: 4vw;
 }
 .iconContainer{
-    border: 1px solid white;
-    border-radius: .7rem;
-    padding: .5rem;
+    border: 1px solid gray;
+    border-radius: 2.5vw;
+    padding: 1.5vw;
+}
+.notificationContainer i{
+    font-size: 7vw;
+    opacity: 60%;
 }
 
