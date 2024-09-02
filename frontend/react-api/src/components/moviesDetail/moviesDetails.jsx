@@ -18,12 +18,23 @@ if (!movie) {
 }
 
 return (
-    <div className="movie-details">
+    <div className="movie-detailsFather">
+        <div className="headerDetailsContainer">
+            <i class='bx bx-left-arrow-alt'></i>
+            <header className="headerDetails">Cinema Selection</header>
+            <i class='bx bx-dots-vertical-rounded'></i>
+        </div>
+        <div className="imgContainerDetails">
+            <img src={movie.image} alt={movie.title} />
+        </div>
+    <div className="titleGenre">
         <h2>{movie.title}</h2>
-        <img src={movie.image} alt={movie.title} />
-        <p>{movie.description}</p>
         <p><strong>Genre:</strong> {movie.genre}</p>
-        <p><strong>Release Date:</strong> {movie.releaseDate}</p>
+    </div>    
+            <p>{movie.description}</p>
+        <div className="cast">
+            {movie.actors}
+        </div> 
     </div>
 );
 }

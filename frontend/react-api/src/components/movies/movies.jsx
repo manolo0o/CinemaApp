@@ -45,10 +45,10 @@ return (
         <li key={index} className="movie-item">
             <Link to={`/movie/${movie._id}`} className="movie-link"> 
             <div className="movie-image">
-                <img src={movie.image} alt={movie.title} />
+                    <img src={movie.image} alt={movie.title} />
                 <div className="contentContainerMovies">
-                <h2>{movie.title}</h2>
-                <p>{movie.genre}</p>
+                    <h2>{movie.title}</h2>
+                    <p>{movie.genre}</p>
                 </div>
             </div>
             </Link>
