@@ -1,0 +1,141 @@
+//POST METHOD
+//create movie
+###
+
+const options = {
+  method: 'POST',
+  headers: {'Content-Type': 'application/json', 'User-Agent': 'insomnia/9.3.3'},
+  body: '{
+    "name":"John Doe",
+    "email":"johndoe@example.com",
+    "password":"123",
+    "phone_number":"+1234567890",
+    "adress":"123 Main Street, Springfield",
+    "status":"VIP",
+    "bookings":[]
+    }'
+};
+
+fetch('http://localhost:3000/clients', options)
+  .then(response => response.json())
+  .then(response => console.log(response))
+  .catch(err => console.error(err));
+
+  //create room
+  ###
+
+  const options = {
+  method: 'POST',
+  headers: {'Content-Type': 'application/json', 'User-Agent': 'insomnia/9.3.3'},
+  body: '{
+    "name":"salon1",
+    "seatings":[
+        {"seatingName":"A1"},
+        {"seatingName":"A2"},
+        {"seatingName":"A3"},
+        {"seatingName":"A4"},
+        {"seatingName":"A5"},
+        {"seatingName":"A6"},
+        {"seatingName":"A7"},
+        {"seatingName":"A8"},
+        {"seatingName":"A9"},
+        {"seatingName":"A10"},
+        {"seatingName":"B1"},
+        {"seatingName":"B2"},
+        {"seatingName":"B3"},
+        {"seatingName":"B4"},
+        {"seatingName":"B5"},
+        {"seatingName":"B6"},
+        {"seatingName":"B7"},
+        {"seatingName":"B8"},
+        {"seatingName":"B9"},
+        {"seatingName":"B10"},
+        {"seatingName":"C1"},
+        {"seatingName":"C2"},
+        {"seatingName":"C3"},
+        {"seatingName":"C4"},
+        {"seatingName":"C5"},
+        {"seatingName":"C6"},
+        {"seatingName":"C7"},
+        {"seatingName":"C8"},
+        {"seatingName":"C9"},
+        {"seatingName":"C10"}
+        ]}'
+};
+
+fetch('http://localhost:3000/rooms', options)
+  .then(response => response.json())
+  .then(response => console.log(response))
+  .catch(err => console.error(err));
+
+  //create movie
+  ###
+  
+  const options = {
+  method: 'POST',
+  headers: {'Content-Type': 'application/json', 'User-Agent': 'insomnia/9.3.3'},
+  body: '{"title":"The Chronicles of Narnia: The Lion, the Witch and the Wardrobe",
+        "description":"Four children discover a magical world inside a wardrobe and join the battle against an evil witch.",
+        "director":"Andrew Adamson",
+        "actors":["Georgie Henley","Skandar Keynes","William Moseley","Tilda Swinton"],
+        "genre":"Fantasy",
+        "duration":143,
+        "releaseDate":"2005-12-09T00:00:00.000Z",
+        "language":"English",
+        "subtitles":["Spanish","German"],
+        "format":"3D"}'
+};
+
+fetch('http://localhost:3000/movies', options)
+  .then(response => response.json())
+  .then(response => console.log(response))
+  .catch(err => console.error(err));
+
+
+// create a function
+### 
+const options = {
+  method: 'POST',
+  headers: {'Content-Type': 'application/json', 'User-Agent': 'insomnia/9.3.3'},
+  body: '{
+    "movie_id":"64b28b5c3f8b9e6fdbc7febe",
+    "room_id":"66c8f85f20d99a3c7f0ff3f5",
+    "function_hour":"7:00",
+    "start_date":"2024-08-15T19:00:00.000Z",
+    "end_date":"2024-10-15T19:00:00.000Z",
+    "seatings":[{"seat_number":"B3","status":"booked"},
+    {"seat_number":"C5","status":"available"},
+    {"seat_number":"A1","status":"available"},
+    {"seat_number":"A2","status":"booked"},
+    {"seat_number":"A3","status":"available"},
+    {"seat_number":"A4","status":"booked"},
+    {"seat_number":"C9","status":"available"},
+    {"seat_number":"C10","status":"booked"}
+    ]}'
+};
+
+fetch('http://localhost:3000/functions', options)
+  .then(response => response.json())
+  .then(response => console.log(response))
+  .catch(err => console.error(err));
+
+//create ticket
+###
+const options = {
+  method: 'POST',
+  headers: {'Content-Type': 'application/json', 'User-Agent': 'insomnia/9.3.3'},
+  body: '{"
+  function_id":"64edfcbc34e5f2a3b6a8c7e0",
+  "client_id":"64edfd12b1b9f1a3c8a9d4f1",
+  "seating":"A12",
+  "price":15.5,
+  "bought_date":"2024-08-28T14:00:00Z",
+  "discount":2.5,
+  "payment_method":"Credit Card",
+  "function_hour":"19:30"}'
+};
+
+fetch('http://localhost:3000/tickets', options)
+  .then(response => response.json())
+  .then(response => console.log(response))
+  .catch(err => console.error(err));
