@@ -4,12 +4,15 @@
     display: flex;
     justify-content: center;
 }
+.childHeader{
+    display: flex;
+    justify-content: space-evenly;
+}
 
 .clientImg{
     display: flex;
     align-items: center;
     max-width: 12%;
-    padding: 2vw;
 }
 .clientImg img{
     border-radius: 10vh;

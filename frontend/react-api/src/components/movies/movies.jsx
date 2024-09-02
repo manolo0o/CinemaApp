@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import './movies.css';
 
 function MovieDisplay() {
@@ -35,24 +36,26 @@ useEffect(() => {
 }, [movies]);
 
 return (
-<div className="movieContainer">
+    <div className="movieContainer">
     <header>
         <h1>Now playing</h1>
     </header>
     <ul className="movie-list" ref={movieListRef}>
         {movies.map((movie, index) => (
         <li key={index} className="movie-item">
+            <Link to={`/movie/${movie._id}`} className="movie-link"> 
             <div className="movie-image">
-            <img src={movie.image} alt={movie.title} />
+                <img src={movie.image} alt={movie.title} />
                 <div className="contentContainerMovies">
-                    <h2>{movie.title}</h2>
-                    <p>{movie.genre}</p>
+                <h2>{movie.title}</h2>
+                <p>{movie.genre}</p>
                 </div>
             </div>
+            </Link>
         </li>
         ))}
     </ul>
-</div>
+    </div>
 );
 }
 
